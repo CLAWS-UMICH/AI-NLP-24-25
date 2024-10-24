@@ -21,3 +21,21 @@ class FeedForwardNetwork(nn.Module):
         # Apply second linear transformation
         out = self.linear2(out)
         return out
+    
+d_model = 512 
+d_ff = 2048 
+
+ffn = FeedForwardNetwork(d_model, d_ff)
+
+batch_size = 2   # Number of sequences in a batch
+seq_len = 10     # Length of each sequence (number of tokens)
+
+# Random input tensor with shape (batch_size, seq_len, d_model)
+x = torch.randn(batch_size, seq_len, d_model)
+
+# Pass the input through the feedforward network
+output = ffn(x)
+
+print("Input shape:", x.shape)
+print("Output shape:", output.shape)
+print("Output tensor:", output)
