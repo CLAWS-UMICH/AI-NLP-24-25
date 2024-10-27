@@ -28,8 +28,7 @@ def get_positional_encoding(token_length, d_model):
     
     return positional_encoding
 
-def main():
-    input_string = "The quick brown fox jumps over the lazy dog"
+def getPos(input_string, d_model):
     d_model = 16  # Dimension of the encoding (you can adjust this based on your model)
     
     # Tokenize the string
@@ -41,6 +40,12 @@ def main():
     
     print("Positional Encoding:")
     print(positional_encoding)
+
+
+def main():
+    getPos("I am walking down the street" , 16)
+
+
 
 if __name__ == "__main__":
     main()
