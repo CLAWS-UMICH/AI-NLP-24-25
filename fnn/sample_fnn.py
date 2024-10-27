@@ -3,16 +3,12 @@ import torch.nn as nn
 import openai
 
 # Function to obtain gpt embeddings
-openai.api_key = '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' # Get openAI API Key
+client = openai.OpenAI(api_key='') # Get openAI API Key
 
-def get_gpt_embeddings(user_question):
-    response = openai.Embedding.create(
-        input=user_question,
-        model="text-embedding-ada-002"
-    )
-    
-    embeddings = response['data'][0]['embedding']
-    return torch.tensor(embeddings).unsqueeze(0)
+def get_embedding(text, model="text-embedding-ada-002"):
+    text = text.replace("\n", " ")
+    response = client.embeddings.create(input=[text], model=model)
+    return torch.tensor(response['data'][0]['embedding']).unsqueeze(0)
 
 class FeedForwardNetwork(nn.Module):
     # d_model is dimensions of input embeddings
@@ -35,21 +31,20 @@ class FeedForwardNetwork(nn.Module):
         out = self.linear2(out)
         return out
     
-d_model = 512 
-d_ff = 2048 
+d_model = 1536
+d_ff = 4096 
 
 ffn = FeedForwardNetwork(d_model, d_ff)
 
-batch_size = 2   # Number of sequences in a batch
-seq_len = 10     # Length of each sequence (number of tokens)
+def process_user_input(user_input):
+    embedding = get_embedding(user_input)
+    ffn_output = ffn(embedding)
 
-user_question = input("Input Astronaut Question: ")
-# x = torch.randn(batch_size, seq_len, d_model)
-x = get_gpt_embeddings(user_question)
+    print("FFN Output Shape:", ffn_output.shape)
+    print("FFN Output Tensor:", ffn_output)
 
-# Pass the input through the feedforward network
-output = ffn(x)
+    return ffn_output
 
-print("Input shape:", x.shape)
-print("Output shape:", output.shape)
-print("Output tensor:", output)
+# Example usage
+user_question = input("Ask me a question: ")
+ffn_result = process_user_input(user_question)
