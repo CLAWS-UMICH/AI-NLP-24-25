@@ -1,5 +1,3 @@
-# Given a sequence of numbers, predict the next number in the sequence (sum of all previous numbers).
-
 import torch
 import torch.nn as nn
 import math
@@ -79,9 +77,9 @@ def generate_sequences(num_batches, batch_size, seq_length):
 # Training parameters
 sequence_length = 5  # 4 input numbers + 1 target
 batch_size = 32
-num_batches = 100
-num_epochs = 150
-learning_rate = 0.0001  # Reduced learning rate for stability
+num_batches = 80
+num_epochs = 75
+learning_rate = 0.0005  # Reduced learning rate for stability
 
 # Generate training data
 x_data, y_data = generate_sequences(num_batches, batch_size, sequence_length)
@@ -127,8 +125,8 @@ with torch.no_grad():
     print("Predicted next number:", prediction[:, -1, :].item())
     print("Expected number:", sum(test_sequence.reshape(-1).tolist()))
     
-    # Test with another sequence [1,1,2,8] → should predict 12
-    test_sequence2 = torch.tensor([[1.0, 1.0, 2.0, 8.0]]).reshape(1, 4, 1)
+    # Test with another sequence [4,4,8,8] → should predict 16
+    test_sequence2 = torch.tensor([[4.0, 4.0, 8.0, 16.0]]).reshape(1, 4, 1)
     prediction2 = model(test_sequence2)
     
     print("\nSecond Test Results:")
