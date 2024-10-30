@@ -29,7 +29,7 @@ def get_positional_encoding(token_length, d_model):
     return positional_encoding
 
 def getPos(input_string, d_model):
-    d_model = 16  # Dimension of the encoding (you can adjust this based on your model)
+    d_model = d_model # Dimension of the encoding (you can adjust this based on your model)
     
     # Tokenize the string
     tokens = tokenize_string(input_string)
