@@ -9,7 +9,12 @@ load_dotenv()
 
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-PROMPT = f"""Generate a simple voice command from an astronaut that would be classified into the SELECTED_BUCKET category. It is mostly tied to pulling up screens on their helmet. For example, Open navigation panel or see my messages"""
+PROMPT = f"""Generate a simple voice command to open a UI element from an astronaut that would be classified into the messages category. ONLY output the voice command
+
+#EXAMPLES
+Open navigation panel
+See my messages
+Pull up my vitals"""
 
 
 # Set your OpenAI API key here
@@ -58,7 +63,7 @@ def generate_one_data_point(buckets, model="gpt-4o-mini"):
     return datapoints
 
 def generate_jsonl_batch_request(num_samples, buckets, model="gpt-4o-mini", file_name="generated_data.jsonl"):
-    template = {"custom_id": "request-", "method": "POST", "url": "/v1/chat/completions", "body": {"model": model, "messages": [{"role": "system", "content": "You are a helpful data generator"}, {"role": "user", "content": PROMPT}],"max_tokens": 100}}
+    template = {"custom_id": "request-", "method": "POST", "url": "/v1/chat/completions", "body": {"model": model, "messages": [{"role": "system", "content": "You are a helpful data generator"}, {"role": "user", "content": PROMPT}],"max_tokens": 100, "temperature": 0.7}}
     open(file_name, "w").close() #remove everything
     with open(file_name, "a") as f:
         for i in range(num_samples):
