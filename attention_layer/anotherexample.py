@@ -10,14 +10,6 @@ class SimpleTransformer(nn.Module):
         self.d_model = 128
         self.sequence_length = 4
         
-        # Positional encoding
-        position = torch.arange(self.sequence_length).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, self.d_model, 2) * (-math.log(10000.0) / self.d_model))
-        pe = torch.zeros(1, self.sequence_length, self.d_model)
-        pe[0, :, 0::2] = torch.sin(position * div_term)
-        pe[0, :, 1::2] = torch.cos(position * div_term)
-        self.register_buffer('pe', pe)
-        
         # Layers
         self.input_layer = nn.Linear(1, self.d_model)
         
@@ -37,9 +29,8 @@ class SimpleTransformer(nn.Module):
         self.output_layer = nn.Linear(self.d_model, 1)
         
     def forward(self, x):
-        # Input embedding + positional encoding
+        # Input embedding
         x = self.input_layer(x)
-        x = x + self.pe
         
         # Transformer processing
         x = self.transformer(x)
@@ -56,11 +47,15 @@ def generate_sequences(num_batches, batch_size, seq_length):
         batch_targets = []
         
         for _ in range(batch_size):
-            # Start with 1
-            seq = [1]
+            # Randomly choose starting numbers between 1 and 10
+            seq = [torch.randint(1, 11, (1,)).item()]
+            
+            # Add a second random starting number between 1 and 10
+            if seq_length > 1:
+                seq.append(torch.randint(1, 11, (1,)).item())
             
             # Each number is the sum of all previous numbers
-            for i in range(seq_length - 1):
+            for i in range(len(seq), seq_length):
                 next_num = sum(seq)
                 seq.append(next_num)
             
@@ -78,11 +73,13 @@ def generate_sequences(num_batches, batch_size, seq_length):
 sequence_length = 5  # 4 input numbers + 1 target
 batch_size = 32
 num_batches = 80
-num_epochs = 75
+num_epochs = 100
 learning_rate = 0.0005  # Reduced learning rate for stability
 
 # Generate training data
 x_data, y_data = generate_sequences(num_batches, batch_size, sequence_length)
+print(x_data[0])
+print(y_data[0])
 x_data = x_data.unsqueeze(-1)  # Add feature dimension
 y_data = y_data.unsqueeze(-1)  # Add feature dimension
 
