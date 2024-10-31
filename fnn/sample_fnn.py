@@ -21,6 +21,8 @@ class FeedForwardNetwork(nn.Module):
         self.relu = nn.ReLU()
         # Second linear layer transforms back from d_ff to d_model dimensions
         self.linear2 = nn.Linear(d_ff, d_model)
+
+        //test
         
     def forward(self, x):
         # Apply first linear transformation
