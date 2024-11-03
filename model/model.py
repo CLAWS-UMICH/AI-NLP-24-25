@@ -1,206 +1,266 @@
+#To train:
+# python model.py --train
+
+#To run:
+# python model.py
+
+from data import (
+    vocab, tokenize, generate_synthetic_data, test_sentences, NUM_CLASSES,
+    action_map_order, build_vocabulary  # Updated to use the list
+)
 from samplePositional import get_positional_encoding
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
-import math
-import numpy as np
-
-# =========================
-# 1. Define Label Constants
-# =========================
-WALKING = 0
-RUNNING = 1
-DANCING = 2
-EATING = 3
-SLEEPING = 4
-CODING = 5
-
-# =========================
-# 2. Updated Vocabulary
-# =========================
-vocab = {
-    "<PAD>": 0, "i": 1, "am": 2, "walking": 3, "running": 4, 
-    "dancing": 5, "eating": 6, "sleeping": 7, "coding": 8, 
-    "walk": 9, "run": 10, "dance": 11, "eat": 12, "sleep": 13, 
-    "code": 14, "walks": 15, "runs": 16, "dances": 17, 
-    "eats": 18, "sleeps": 19, "codes": 20
-}
-vocab_size = len(vocab)
+import argparse
+import string
 
 # =====================================
-# 3. Hyperparameters and Label Mapping
+# Global Configuration
 # =====================================
-D_MODEL = 128           # Increased Embedding dimension from 16 to 128
-NUM_CLASSES = 6         # Updated to match the number of label constants
-MAX_LEN = 10           
-BATCH_SIZE = 8          # Increased batch size for better gradient estimates
-EPOCHS = 20
-LR = 0.001
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # =====================================
-# 4. Expanded Dataset with Constants
+# Hyperparameters
 # =====================================
-sentences = [
-    # Walking
-    "i am walking", "i walk every morning", "walking am i", 
-    "she walks to school", "walking is fun", "walks am i",
-
-    # Running
-    "i am running", "i run in the park", "running am i", 
-    "he runs daily", "running keeps me fit", "runs am i",
-
-    # Dancing
-    "i am dancing", "i dance at parties", "dancing am i", 
-    "she dances gracefully", "dancing is joyful", "dances am i",
-
-    # Eating
-    "i am eating", "i eat an apple", "eating am i",
-    "he eats quickly", "eating makes me happy", "eats am i",
-
-    # Sleeping
-    "i am sleeping", "i sleep early", "sleeping am i", 
-    "she sleeps peacefully", "sleeping is essential", "sleeps am i",
-
-    # Coding
-    "i am coding", "i code in Python", "coding am i", 
-    "he codes efficiently", "coding challenges me", "codes am i"
-]
-
-labels = [
-    # Walking
-    WALKING, WALKING, WALKING, 
-    WALKING, WALKING, WALKING,
-
-    # Running
-    RUNNING, RUNNING, RUNNING, 
-    RUNNING, RUNNING, RUNNING,
-
-    # Dancing
-    DANCING, DANCING, DANCING, 
-    DANCING, DANCING, DANCING,
-
-    # Eating
-    EATING, EATING, EATING, 
-    EATING, EATING, EATING,
-
-    # Sleeping
-    SLEEPING, SLEEPING, SLEEPING, 
-    SLEEPING, SLEEPING, SLEEPING,
-
-    # Coding
-    CODING, CODING, CODING, 
-    CODING, CODING, CODING
-]  # Updated labels using constants
+D_MODEL = 512
+MAX_LEN = 10
+BATCH_SIZE = 64
+EPOCHS = 100
+LR = 0.0003
 
 # =========================
-# 5. Tokenizer Function
-# =========================
-def tokenize(sentence):
-    return [vocab.get(word, vocab["<PAD>"]) for word in sentence.lower().split()]
-
-# =========================
-# 6. Dataset Class
+# Dataset Class
 # =========================
 class ActionDataset(Dataset):
-    def __init__(self, sentences, labels, max_len):
-        self.sentences = sentences
-        self.labels = labels
+    def __init__(self, data, max_len):
+        self.sentences = [item[0] for item in data]
+        self.labels = [item[1] for item in data]
         self.max_len = max_len
 
     def __len__(self):
         return len(self.sentences)
 
     def __getitem__(self, idx):
-        tokens = tokenize(self.sentences[idx])
-        # Padding
+        tokens = [vocab.get(word.strip(string.punctuation).lower(), vocab["<PAD>"]) 
+                 for word in self.sentences[idx].split()]
+        
         if len(tokens) < self.max_len:
             tokens += [vocab["<PAD>"]] * (self.max_len - len(tokens))
         else:
             tokens = tokens[:self.max_len]
-        return torch.tensor(tokens, dtype=torch.long), torch.tensor(self.labels[idx], dtype=torch.long)
+        
+        label_vector = [((self.labels[idx] >> i) & 1) for i in range(NUM_CLASSES)]
+        return torch.tensor(tokens, dtype=torch.long), torch.tensor(label_vector, dtype=torch.float)
 
 # =========================
-# 7. Transformer Model
+# Model Definition
 # =========================
 class BasicTransformerClassifier(nn.Module):
     def __init__(self, vocab_size, d_model, num_classes, max_len):
         super(BasicTransformerClassifier, self).__init__()
+        
+        # Embedding layer
         self.embedding = nn.Embedding(vocab_size, d_model)
-        self.positional_encoding = torch.tensor(get_positional_encoding(max_len, d_model))
-        self.transformer_encoder = nn.TransformerEncoder(
-            nn.TransformerEncoderLayer(
-                d_model=d_model, 
-                nhead=4, 
-                dim_feedforward=256, 
-                batch_first=True  # Set batch_first to True
-            ),
-            num_layers=4
+        
+        # Simple positional encoding
+        self.pos_encoder = nn.Parameter(torch.zeros(1, max_len, d_model))
+        nn.init.normal_(self.pos_encoder, mean=0, std=0.02)
+        
+        # Single powerful transformer layer
+        self.transformer = nn.TransformerEncoderLayer(
+            d_model=d_model,
+            nhead=8,
+            dim_feedforward=2048,
+            dropout=0.1,
+            batch_first=True
         )
-        self.fc = nn.Linear(d_model, num_classes)
-
+        
+        # Simple but effective classifier
+        self.classifier = nn.Sequential(
+            nn.Linear(d_model, d_model),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(d_model, num_classes)
+        )
+        
     def forward(self, x):
-        embedded = self.embedding(x) + self.positional_encoding[:x.size(1), :].to(x.device)
-        transformed = self.transformer_encoder(embedded)
-        out = self.fc(transformed.mean(dim=1))  # Average pooling
-        return out
+        # Embedding with positional encoding
+        x = self.embedding(x) + self.pos_encoder
+        
+        # Apply transformer
+        x = self.transformer(x)
+        
+        # Global max pooling instead of mean
+        x = torch.max(x, dim=1)[0]
+        
+        # Classification
+        return self.classifier(x)
 
 # =========================
-# 8. Prepare Data Loaders
+# Action Prediction Function
 # =========================
-train_dataset = ActionDataset(sentences, labels, MAX_LEN)
-train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+def predict_action(model, sentence, max_len=MAX_LEN, threshold=0.5):
+    model.eval()
+    with torch.no_grad():
+        test_tokens = tokenize(sentence)
+        if len(test_tokens) < max_len:
+            test_tokens += [vocab["<PAD>"]] * (max_len - len(test_tokens))
+        else:
+            test_tokens = test_tokens[:max_len]
+        
+        test_tensor = torch.tensor(test_tokens, dtype=torch.long).unsqueeze(0).to(device)
+        logits = model(test_tensor)
+        probabilities = torch.sigmoid(logits)[0]
+        
+        print("\nPredicted actions:")
+        detected_actions = []
+        for i, action_name in enumerate(action_map_order):
+            prob = probabilities[i].item() * 100
+            print(f"{action_name:10}: {prob:.1f}%")
+            if prob > threshold * 100:
+                detected_actions.append(action_name)
+        
+        return ", ".join(detected_actions) if detected_actions else "No actions detected"
 
 # =========================
-# 9. Initialize Model, Loss, Optimizer
+# Main Function
 # =========================
-model = BasicTransformerClassifier(vocab_size=vocab_size, d_model=D_MODEL, num_classes=NUM_CLASSES, max_len=MAX_LEN)
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=LR)
+def main():
+    parser = argparse.ArgumentParser(description='Predict action from input sentence')
+    parser.add_argument('--train', action='store_true', help='Train the model')
+    parser.add_argument('--sentence', type=str, help='Input sentence to evaluate')
+    args = parser.parse_args()
 
-# =========================
-# 10. Training Loop
-# =========================
-for epoch in range(EPOCHS):
-    model.train()
-    total_loss = 0
-    for tokens, label in train_loader:
-        optimizer.zero_grad()
-        output = model(tokens)
-        loss = criterion(output, label)
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
+    # Generate data and build vocabulary first
+    synthetic_data = generate_synthetic_data(num_samples=10000)
+    vocab = build_vocabulary(synthetic_data)  # Get vocab from actual data
     
-    print(f"Epoch [{epoch+1}/{EPOCHS}], Loss: {total_loss / len(train_loader):.4f}")
+    model = BasicTransformerClassifier(
+        vocab_size=len(vocab),
+        d_model=D_MODEL,
+        num_classes=NUM_CLASSES,
+        max_len=MAX_LEN
+    ).to(device)
 
-print("Training complete.")
+    if args.train:
+        # No need for separate validation data generation
+        train_dataset = ActionDataset(synthetic_data[:9000], MAX_LEN)  # Use 90% for training
+        val_dataset = ActionDataset(synthetic_data[9000:], MAX_LEN)    # Use 10% for validation
+        
+        train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE)
+        
+        # Use weighted loss
+        pos_weight = torch.ones(NUM_CLASSES).to(device) * 2.0
+        criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+        
+        # Use AdamW with weight decay
+        optimizer = optim.AdamW(model.parameters(), lr=LR, weight_decay=0.01)
+        
+        # Learning rate scheduler
+        scheduler = optim.lr_scheduler.OneCycleLR(
+            optimizer,
+            max_lr=LR * 10,
+            epochs=EPOCHS,
+            steps_per_epoch=len(train_loader),
+            pct_start=0.3
+        )
+        
+        best_val_acc = 0
+        patience = 10
+        no_improve = 0
+        
+        for epoch in range(EPOCHS):
+            # Training phase
+            model.train()
+            train_loss = 0
+            train_correct = 0
+            train_total = 0
+            
+            for batch_x, batch_y in train_loader:
+                batch_x, batch_y = batch_x.to(device), batch_y.to(device)
+                
+                optimizer.zero_grad()
+                logits = model(batch_x)
+                loss = criterion(logits, batch_y)
+                
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                optimizer.step()
+                scheduler.step()
+                
+                train_loss += loss.item()
+                predictions = (torch.sigmoid(logits) > 0.5).float()
+                train_correct += (predictions == batch_y).sum().item()
+                train_total += batch_y.numel()
+            
+            # Validation phase
+            model.eval()
+            val_loss = 0
+            val_correct = 0
+            val_total = 0
+            
+            with torch.no_grad():
+                for batch_x, batch_y in val_loader:
+                    batch_x, batch_y = batch_x.to(device), batch_y.to(device)
+                    logits = model(batch_x)
+                    loss = criterion(logits, batch_y)
+                    
+                    val_loss += loss.item()
+                    predictions = (torch.sigmoid(logits) > 0.5).float()
+                    val_correct += (predictions == batch_y).sum().item()
+                    val_total += batch_y.numel()
+            
+            train_loss = train_loss / len(train_loader)
+            train_acc = train_correct / train_total
+            val_loss = val_loss / len(val_loader)
+            val_acc = val_correct / val_total
+            
+            print(f"Epoch [{epoch+1}/{EPOCHS}]")
+            print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}")
+            print(f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+            
+            # Early stopping check
+            if val_acc > best_val_acc:
+                best_val_acc = val_acc
+                torch.save(model.state_dict(), 'best_model.pth')
+                no_improve = 0
+            else:
+                no_improve += 1
+                if no_improve >= patience:
+                    print(f"Early stopping triggered at epoch {epoch+1}")
+                    break
+            
+            # Test on sample sentences every 10 epochs
+            if (epoch + 1) % 10 == 0:
+                print("\nTesting sample sentences:")
+                for test_sent in test_sentences:
+                    pred = predict_action(model, test_sent)
+                    print(f"'{test_sent}' -> {pred}")
+                print()
+                
+        print("Training completed.")
+    else:
+        try:
+            model.load_state_dict(torch.load('best_model.pth'))
+        except FileNotFoundError:
+            print("Error: Model file not found. Please train the model first using --train")
+            return
 
-# =========================
-# 11. Inference with Constants
-# =========================
-test_sentence = "i am dancing"
-test_tokens = tokenize(test_sentence)
-if len(test_tokens) < MAX_LEN:
-    test_tokens += [vocab["<PAD>"]] * (MAX_LEN - len(test_tokens))
-else:
-    test_tokens = test_tokens[:MAX_LEN]
-test_tensor = torch.tensor(test_tokens, dtype=torch.long).unsqueeze(0)
+    if args.sentence:
+        prediction = predict_action(model, args.sentence)
+        print(f"Predicted action for '{args.sentence}': {prediction}")
+    elif not args.train:
+        print("Enter sentences to predict actions (type 'quit' to exit):")
+        while True:
+            sentence = input("> ")
+            if sentence.lower() == 'quit':
+                break
+            prediction = predict_action(model, sentence)
+            print(f"Predicted action: {prediction}")
 
-# Define action mapping using constants
-action_map = {
-    WALKING: "walking",
-    RUNNING: "running",
-    DANCING: "dancing",
-    EATING: "eating",
-    SLEEPING: "sleeping",
-    CODING: "coding"
-}
-
-# Inference
-model.eval()
-with torch.no_grad():
-    output = model(test_tensor)
-    predicted_action = torch.argmax(output, dim=1).item()
-    print(f"Predicted action for '{test_sentence}': {action_map.get(predicted_action, 'Unknown')}")
+if __name__ == "__main__":
+    main()
