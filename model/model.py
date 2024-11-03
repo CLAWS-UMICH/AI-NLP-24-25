@@ -65,8 +65,11 @@ class BasicTransformerClassifier(nn.Module):
         # Embedding layer
         self.embedding = nn.Embedding(vocab_size, d_model)
         
-        # Use positional encoding from samplePositional
-        self.pos_encoder = get_positional_encoding(max_len, d_model)
+        # Convert positional encoding from NumPy to Torch Tensor and register as buffer
+        pos_encoder_np = get_positional_encoding(max_len, d_model)
+        pos_encoder_tensor = torch.from_numpy(pos_encoder_np).float()  # Convert to tensor
+        pos_encoder_tensor = pos_encoder_tensor.unsqueeze(0)  # Add batch dimension: (1, max_len, d_model)
+        self.register_buffer('pos_encoder', pos_encoder_tensor)  # Register as buffer
         
         # Create transformer encoder layer
         encoder_layer = nn.TransformerEncoderLayer(
@@ -80,7 +83,7 @@ class BasicTransformerClassifier(nn.Module):
         # Stack multiple transformer layers
         self.transformer = nn.TransformerEncoder(
             encoder_layer,
-            num_layers=6  # Using 6 layers like the original transformer paper
+            num_layers=6  
         )
         
         # Simple but effective classifier
@@ -92,8 +95,17 @@ class BasicTransformerClassifier(nn.Module):
         )
         
     def forward(self, x):
+        """
+        Forward pass of the model.
+        
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch_size, max_len)
+        
+        Returns:
+            torch.Tensor: Output logits of shape (batch_size, num_classes)
+        """
         # Embedding with positional encoding
-        x = self.embedding(x) + self.pos_encoder.to(x.device)
+        x = self.embedding(x) + self.pos_encoder  # Broadcasting over batch dimension
         
         # Apply transformer stack
         x = self.transformer(x)
