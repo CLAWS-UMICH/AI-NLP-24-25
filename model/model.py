@@ -65,17 +65,22 @@ class BasicTransformerClassifier(nn.Module):
         # Embedding layer
         self.embedding = nn.Embedding(vocab_size, d_model)
         
-        # Simple positional encoding
-        self.pos_encoder = nn.Parameter(torch.zeros(1, max_len, d_model))
-        nn.init.normal_(self.pos_encoder, mean=0, std=0.02)
+        # Use positional encoding from samplePositional
+        self.pos_encoder = get_positional_encoding(max_len, d_model)
         
-        # Single powerful transformer layer
-        self.transformer = nn.TransformerEncoderLayer(
+        # Create transformer encoder layer
+        encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model,
             nhead=8,
             dim_feedforward=2048,
             dropout=0.1,
             batch_first=True
+        )
+        
+        # Stack multiple transformer layers
+        self.transformer = nn.TransformerEncoder(
+            encoder_layer,
+            num_layers=6  # Using 6 layers like the original transformer paper
         )
         
         # Simple but effective classifier
@@ -88,9 +93,9 @@ class BasicTransformerClassifier(nn.Module):
         
     def forward(self, x):
         # Embedding with positional encoding
-        x = self.embedding(x) + self.pos_encoder
+        x = self.embedding(x) + self.pos_encoder.to(x.device)
         
-        # Apply transformer
+        # Apply transformer stack
         x = self.transformer(x)
         
         # Global max pooling instead of mean
