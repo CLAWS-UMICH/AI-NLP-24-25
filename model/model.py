@@ -16,6 +16,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
 import argparse
 import string
+import math
 
 # =====================================
 # Global Configuration
@@ -25,11 +26,13 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # =====================================
 # Hyperparameters
 # =====================================
-D_MODEL = 512
-MAX_LEN = 10
+D_MODEL = 256
+MAX_LEN = 64
 BATCH_SIZE = 64
-EPOCHS = 100
-LR = 0.0003
+EPOCHS = 20
+LR = 3e-4
+NUM_HEADS = 8
+NUM_LAYERS = 3
 
 # =========================
 # Dataset Class
@@ -58,63 +61,66 @@ class ActionDataset(Dataset):
 # =========================
 # Model Definition
 # =========================
-class BasicTransformerClassifier(nn.Module):
-    def __init__(self, vocab_size, d_model, num_classes, max_len):
-        super(BasicTransformerClassifier, self).__init__()
+class ImprovedTransformerClassifier(nn.Module):
+    def __init__(self, vocab_size, embed_dim=256, num_heads=8, num_layers=4, 
+                 max_len=64, num_classes=NUM_CLASSES, dropout=0.1):
+        super(ImprovedTransformerClassifier, self).__init__()
         
-        # Embedding layer
-        self.embedding = nn.Embedding(vocab_size, d_model)
+        self.embed_dim = embed_dim  # Store embed_dim as instance variable
+        self.max_len = max_len      # Store max_len as instance variable
         
-        # Convert positional encoding from NumPy to Torch Tensor and register as buffer
-        pos_encoder_np = get_positional_encoding(max_len, d_model)
-        pos_encoder_tensor = torch.from_numpy(pos_encoder_np).float()  # Convert to tensor
-        pos_encoder_tensor = pos_encoder_tensor.unsqueeze(0)  # Add batch dimension: (1, max_len, d_model)
-        self.register_buffer('pos_encoder', pos_encoder_tensor)  # Register as buffer
+        # Embedding layers
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.pos_embedding = nn.Parameter(torch.zeros(1, max_len, embed_dim))
+        self.embed_dropout = nn.Dropout(dropout)
         
-        # Create transformer encoder layer
+        # Initialize position embeddings
+        self.init_pos_embeddings()
+        
+        # Use PyTorch's built-in transformer
         encoder_layer = nn.TransformerEncoderLayer(
-            d_model=d_model,
-            nhead=8,
-            dim_feedforward=2048,
-            dropout=0.1,
+            d_model=embed_dim,
+            nhead=num_heads,
+            dim_feedforward=embed_dim * 4,
+            dropout=dropout,
             batch_first=True
         )
+        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
         
-        # Stack multiple transformer layers
-        self.transformer = nn.TransformerEncoder(
-            encoder_layer,
-            num_layers=6  
-        )
-        
-        # Simple but effective classifier
+        # Classification head
         self.classifier = nn.Sequential(
-            nn.Linear(d_model, d_model),
-            nn.ReLU(),
-            nn.Dropout(0.1),
-            nn.Linear(d_model, num_classes)
+            nn.LayerNorm(embed_dim),
+            nn.Linear(embed_dim, num_classes)
         )
         
+    def init_pos_embeddings(self):
+        position = torch.arange(self.max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, self.embed_dim, 2) * (-math.log(10000.0) / self.embed_dim))
+        pe = torch.zeros(self.max_len, self.embed_dim)
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term[:self.embed_dim//2])  # Make sure we don't overflow
+        self.pos_embedding.data = pe.unsqueeze(0)
+
     def forward(self, x):
-        """
-        Forward pass of the model.
+        # Create padding mask
+        padding_mask = (x == vocab["<PAD>"]).to(x.device)
         
-        Args:
-            x (torch.Tensor): Input tensor of shape (batch_size, max_len)
+        # Embedding layer
+        x = self.embedding(x)
+        x = x + self.pos_embedding[:, :x.size(1), :]
+        x = self.embed_dropout(x)
         
-        Returns:
-            torch.Tensor: Output logits of shape (batch_size, num_classes)
-        """
-        # Embedding with positional encoding
-        x = self.embedding(x) + self.pos_encoder  # Broadcasting over batch dimension
+        # Transformer layers
+        x = self.transformer(x, src_key_padding_mask=padding_mask)
         
-        # Apply transformer stack
-        x = self.transformer(x)
-        
-        # Global max pooling instead of mean
-        x = torch.max(x, dim=1)[0]
+        # Global average pooling (excluding padding)
+        mask_expanded = ~padding_mask.unsqueeze(-1).expand(x.size())
+        sum_embeddings = (x * mask_expanded.float()).sum(dim=1)
+        count_tokens = mask_expanded.float().sum(dim=1)
+        pooled_output = sum_embeddings / count_tokens.clamp(min=1e-9)
         
         # Classification
-        return self.classifier(x)
+        return self.classifier(pooled_output)
 
 # =========================
 # Action Prediction Function
@@ -151,16 +157,36 @@ def main():
     parser.add_argument('--sentence', type=str, help='Input sentence to evaluate')
     args = parser.parse_args()
 
-    # Generate data and build vocabulary first
+    # Move data generation before the vocabulary building
     synthetic_data = generate_synthetic_data(num_samples=10000)
-    vocab = build_vocabulary(synthetic_data)  # Get vocab from actual data
     
-    model = BasicTransformerClassifier(
-        vocab_size=len(vocab),
-        d_model=D_MODEL,
-        num_classes=NUM_CLASSES,
-        max_len=MAX_LEN
-    ).to(device)
+    # Load the model first to ensure we use the same vocabulary size
+    try:
+        # Try to load the model to get the vocab size
+        state_dict = torch.load('best_model.pth')
+        vocab_size = state_dict['embedding.weight'].shape[0]
+        model = ImprovedTransformerClassifier(
+            vocab_size=vocab_size,
+            embed_dim=D_MODEL,
+            num_heads=NUM_HEADS,
+            num_layers=NUM_LAYERS,
+            max_len=MAX_LEN,
+            num_classes=NUM_CLASSES,
+            dropout=0.1
+        ).to(device)
+        model.load_state_dict(state_dict)
+    except FileNotFoundError:
+        # If no model exists, build vocabulary and create new model
+        vocab = build_vocabulary(synthetic_data)
+        model = ImprovedTransformerClassifier(
+            vocab_size=len(vocab),
+            embed_dim=D_MODEL,
+            num_heads=NUM_HEADS,
+            num_layers=NUM_LAYERS,
+            max_len=MAX_LEN,
+            num_classes=NUM_CLASSES,
+            dropout=0.1
+        ).to(device)
 
     if args.train:
         # No need for separate validation data generation
@@ -191,13 +217,17 @@ def main():
         no_improve = 0
         
         for epoch in range(EPOCHS):
-            # Training phase
             model.train()
             train_loss = 0
             train_correct = 0
             train_total = 0
             
-            for batch_x, batch_y in train_loader:
+            # Add progress tracking
+            total_batches = len(train_loader)
+            print(f"\nEpoch {epoch+1}/{EPOCHS}")
+            print("Training Progress:")
+            
+            for batch_idx, (batch_x, batch_y) in enumerate(train_loader):
                 batch_x, batch_y = batch_x.to(device), batch_y.to(device)
                 
                 optimizer.zero_grad()
@@ -213,15 +243,23 @@ def main():
                 predictions = (torch.sigmoid(logits) > 0.5).float()
                 train_correct += (predictions == batch_y).sum().item()
                 train_total += batch_y.numel()
+                
+                # Print progress every 10% of batches
+                if (batch_idx + 1) % (total_batches // 10) == 0:
+                    current_loss = train_loss / (batch_idx + 1)
+                    current_acc = train_correct / train_total
+                    progress = (batch_idx + 1) / total_batches * 100
+                    print(f"Progress: {progress:.1f}% | Loss: {current_loss:.4f} | Acc: {current_acc:.4f}")
             
-            # Validation phase
+            # Validation phase with progress tracking
             model.eval()
             val_loss = 0
             val_correct = 0
             val_total = 0
             
+            print("\nValidation Progress:")
             with torch.no_grad():
-                for batch_x, batch_y in val_loader:
+                for batch_idx, (batch_x, batch_y) in enumerate(val_loader):
                     batch_x, batch_y = batch_x.to(device), batch_y.to(device)
                     logits = model(batch_x)
                     loss = criterion(logits, batch_y)
@@ -230,15 +268,34 @@ def main():
                     predictions = (torch.sigmoid(logits) > 0.5).float()
                     val_correct += (predictions == batch_y).sum().item()
                     val_total += batch_y.numel()
+                    
+                    # Print progress every 25% of validation
+                    if (batch_idx + 1) % (len(val_loader) // 4) == 0:
+                        current_loss = val_loss / (batch_idx + 1)
+                        current_acc = val_correct / val_total
+                        progress = (batch_idx + 1) / len(val_loader) * 100
+                        print(f"Progress: {progress:.1f}% | Loss: {current_loss:.4f} | Acc: {current_acc:.4f}")
             
+            # End of epoch summary
             train_loss = train_loss / len(train_loader)
             train_acc = train_correct / train_total
             val_loss = val_loss / len(val_loader)
             val_acc = val_correct / val_total
             
-            print(f"Epoch [{epoch+1}/{EPOCHS}]")
-            print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}")
-            print(f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+            print("\nEpoch Summary:")
+            print(f"Train Loss: {train_loss:.4f} | Train Acc: {train_acc:.4f}")
+            print(f"Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.4f}")
+            print(f"Learning Rate: {scheduler.get_last_lr()[0]:.6f}")
+            
+            # Sample predictions every 5 epochs
+            if (epoch + 1) % 5 == 0:
+                print("\nSample Predictions:")
+                model.eval()
+                with torch.no_grad():
+                    for test_sent in test_sentences[:3]:  # Only show 3 examples
+                        pred = predict_action(model, test_sent)
+                        print(f"Input: '{test_sent}'")
+                        print(f"Prediction: {pred}\n")
             
             # Early stopping check
             if val_acc > best_val_acc:

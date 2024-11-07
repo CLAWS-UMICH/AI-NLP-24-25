@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Train Model",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/model/model.py",
+      "console": "integratedTerminal",
+      "args": ["--train"]
+    },
+    {
+      "name": "Run Model Inference",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/model/model.py",
+      "console": "integratedTerminal",
+      "args": ["--sentence", "I am walking and coding"]
+    }
+  ]
+}
