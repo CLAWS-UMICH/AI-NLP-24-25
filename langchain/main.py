@@ -1,9 +1,20 @@
 from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
+from langchain.callbacks.base import BaseCallbackHandler
 from tools import tools
 import os
 
-llm = ChatOpenAI(model_name="gpt-4")
+# for streaming response
+class StreamingCallbackHandler(BaseCallbackHandler):
+    def on_llm_new_token(self, token: str, **kwargs) -> None:
+        print(token, end='', flush=True)
+
+llm = ChatOpenAI(
+    model_name="gpt-4o",
+    streaming=True,
+    callbacks=[StreamingCallbackHandler()],
+    verbose=False
+)
 agent = initialize_agent(
     tools=tools,
     llm=llm,
@@ -12,10 +23,10 @@ agent = initialize_agent(
 )
 
 def langchain_agent_response(query: str):
-    response = agent.invoke(query)
+    response = agent.run(query)
     return response
 
 # Example usage
 if __name__ == "__main__":
     prompt = input("Astronaut prompt: ")
-    print(langchain_agent_response(prompt))
+    langchain_agent_response(prompt)
