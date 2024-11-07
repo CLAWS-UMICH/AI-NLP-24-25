@@ -9,7 +9,7 @@ load_dotenv()
 
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-PROMPT = f"""Generate a simple voice command to open a UI element from an astronaut that would be classified into the messages category. ONLY output the voice command
+PROMPT = f"""Generate a simple voice command to open a UI element from an astronaut that would be classified into the SELECTED_BUCKET category. ONLY output the voice command
 
 #EXAMPLES
 Open navigation panel
