@@ -16,5 +16,5 @@ def langchain_agent_response(query: str):
 
 # Example usage
 if __name__ == "__main__":
-    prompt = input("Astronaut prompt: ")
-    print(langchain_agent_response(prompt))
+    response = input("Astronaut prompt: ")
+    print(langchain_agent_response(response))
