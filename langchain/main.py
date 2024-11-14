@@ -2,7 +2,12 @@ from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 from langchain.callbacks.base import BaseCallbackHandler
 from tools import tools
+from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import os
+
+# tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
+# model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2") 
 
 # for streaming response
 class StreamingCallbackHandler(BaseCallbackHandler):
@@ -15,6 +20,7 @@ llm = ChatOpenAI(
     callbacks=[StreamingCallbackHandler()],
     verbose=False
 )
+
 agent = initialize_agent(
     tools=tools,
     llm=llm,
