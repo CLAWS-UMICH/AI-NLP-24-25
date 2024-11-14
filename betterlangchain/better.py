@@ -35,10 +35,14 @@ class FunctionCall:
 
 class Agent:
     def __init__(self, tools):
+        print("Initializing Agent...")
         self.tools = {tool.name: tool for tool in tools}
+        print(f"Loaded {len(tools)} tools: {', '.join(self.tools.keys())}")
+        
         self.client = OpenAI(
             api_key=os.getenv("OPENAI_API_KEY"),
         )
+        print("OpenAI client initialized")
         
         # Add built-in give_response tool
         self.tools["give_response"] = Tool(
@@ -48,52 +52,57 @@ class Agent:
             return_description="None",
             function=lambda response: None
         )
+        print("Added built-in give_response tool")
 
         # Initialize conversation history with system prompt
         self.conversation_history = []
-        system_prompt = """You are an AI assistant that helps users by calling appropriate tools.
-        
-        You MUST respond with a JSON object in this exact format:
-        {
-            "reasoning": "explanation of why you're calling this tool",
-            "action": "name of the tool to use",
-            "params": {},
-            "futurePlan": "if using a tool other than give_response, explain what you'll do with the result. If using give_response, set this to 'end conversation'"
-        }
-        
-        If the exact format is not followed, AWFUL THINGS WILL HAPPEN.
 
-        Example:
-        {
-            "reasoning": "Returning a response to the user",
-            "action": "give_response",
-            "params": {"response": "Hello!"},
-            "futurePlan": "end conversation"
-        }
+        TOOL_NAME_OPTIONS = [tool.name for tool in self.tools.values()]
 
-        IMPORTANT WORKFLOW:
-        1. First, use any necessary tools to gather information
-        2. Once you have all needed information, you MUST use give_response to provide the final answer
-        3. Never call the same tool multiple times with the same parameters
-        4. The conversation ends when you call give_response
+        system_prompt = """You are an AI assistant. Use tools to help users.
         
-        Note that the get_response tool will END THE CONVERSATION. Only use this tool if you already have ALL needed information, you can't call any tools after using it!
-
+        YOU MUST RESPOND WITH EXACTLY 4 LINES, NO EXCEPTIONS:
+        Line 1: "PLAN - " followed by your plan
+        Line 2: tool name (must be exact match from list below)
+        Line 3: parameters (write 'none' if no parameters)
+        Line 4: "DONE" or "CONTINUE"
+        
+        CRITICAL: 
+        - ALWAYS include all 4 lines
+        - NEVER skip the PLAN line
+        - NEVER add extra lines
+        - ALWAYS use give_response tool to communicate with user
+        
+        Example correct response:
+        PLAN - I will check the system status
+        GetSystemStatus
+        none
+        CONTINUE
+        
+        Example response with give_response:
+        PLAN - I will tell the user their vitals
+        give_response
+        response=Your heart rate is 72 bpm
+        DONE
+        
         Available tools:
-        """ + json.dumps({name: {
-            'description': tool.description,
-            'params': [{'name': p.name, 'type': p.type, 'description': p.description} for p in tool.params]
-        } for name, tool in self.tools.items()}, indent=2)
+        """ + "\n".join(f"- {name}: {tool.description}" for name, tool in self.tools.items())
 
         self.conversation_history.append(Message(from_="system", content=system_prompt))
+        print("System prompt added to conversation history")
     
     def get_tools_used(self):
-        return [item.tool_used for item in self.conversation_history if isinstance(item, FunctionCall)]
+        tools = [item.tool_used for item in self.conversation_history if isinstance(item, FunctionCall)]
+        print(f"Tools used in conversation: {tools}")
+        return tools
     
     def clear_conversation_history(self):
+        print("Clearing conversation history...")
         self.conversation_history = [self.conversation_history[0]]
+        print("Conversation history cleared, kept system prompt")
 
     def format_conversation_history(self):
+        print("Formatting conversation history...")
         formatted_messages = []
         
         for item in self.conversation_history:
@@ -113,10 +122,15 @@ class Agent:
                     "content": f"Tool '{item.tool_used}' was called with parameters {item.params} and returned: {item.return_value}"
                 })
         
+        print(f"Formatted {len(formatted_messages)} messages")
         return formatted_messages
 
     def execute_tool(self, tool_name, params):
+        print(f"\nExecuting tool: {tool_name}")
+        print(f"Parameters: {params}")
+        
         if tool_name not in self.tools:
+            print(f"ERROR: Unknown tool {tool_name}")
             raise ValueError(f"Unknown tool: {tool_name}")
         
         tool = self.tools[tool_name]
@@ -127,52 +141,62 @@ class Agent:
                 params = {"response": params}
             elif isinstance(params, dict) and "response" not in params:
                 params = {"response": str(params)}
+            print("Processed give_response parameters")
         
         result = tool.function(**params)
+        print(f"Tool returned: {result}")
         
         self.conversation_history.append(FunctionCall(
             tool_used=tool_name,
             params=params,
             return_value=result
         ))
+        print("Tool execution recorded in conversation history")
         
         return result
 
     def ask(self, user_input):
+        print(f"\nReceived user input: {user_input}")
         self.conversation_history.append(Message(from_="user", content=user_input))
         
         while True:
+            print("\nFormatting conversation history for API call...")
             messages = self.format_conversation_history()
             
+            print("Calling OpenAI API...")
             chat_completion = self.client.chat.completions.create(
                 messages=messages,
                 model="gpt-4o-mini",
                 temperature=0,
-                response_format={"type": "json_object"},
                 max_tokens=500
             )
 
             response = chat_completion.choices[0].message.content
-            parsed_response = json.loads(response)
+            print(f"Received API response:\n{response}")
             
-            # Validate required fields
-            required_fields = ["action", "params", "reasoning", "futurePlan"]
-            if not all(field in parsed_response for field in required_fields):
-                raise ValueError(f"Missing required fields. Response was: {response}")
-
-            print(response)
+            lines = response.strip().split('\n')
+            
+            parsed_response = {
+                "plan": lines[0].strip(),
+                "action": lines[1].strip(),
+                "params": dict(p.split('=', 1) for p in lines[2].strip().split('\n') if '=' in p),
+                "futurePlan": lines[3].strip()
+            }
+            print(f"Parsed response: {parsed_response}")
 
             # Add AI's message to conversation history
             self.conversation_history.append(Message(
                 from_="ai",
                 content=response
             ))
+            print("Added AI response to conversation history")
             
             # Execute the chosen tool
             result = self.execute_tool(parsed_response["action"], parsed_response["params"])
             
             # If the tool was give_response, we're done
             if parsed_response["action"] == "give_response":
+                print("give_response tool called, ending conversation turn")
                 return parsed_response["params"]["response"]
             
             # Add the tool's result to the conversation history
@@ -180,9 +204,11 @@ class Agent:
                 from_="system",
                 content=f"Tool '{parsed_response['action']}' returned: {result}"
             ))
+            print("Added tool result to conversation history")
                     
 
 def get_hardcoded_vitals(input_text=None):
+    print("Getting hardcoded vitals...")
     vitals = {
         "heart_rate": "72 bpm",
         "blood_pressure": "120/80 mmHg",
@@ -192,6 +218,7 @@ def get_hardcoded_vitals(input_text=None):
     return vitals
 
 def get_system_status(input_text=None):
+    print("Getting system status...")
     status = {
         "cpu_usage": "45%",
         "memory_usage": "60%",
@@ -200,6 +227,7 @@ def get_system_status(input_text=None):
     }
     return status
 
+print("Creating agent with tools...")
 agent = Agent([
     Tool(
         name="GetHardcodedVitals",
@@ -218,11 +246,13 @@ agent = Agent([
     ])
 
 def main(): 
-    print("AI Assistant ready! Type 'quit' to exit.")
+    print("\nAI Assistant ready! Type 'quit' to exit.")
     while True:
         user_input = input("\nYou: ").strip()
         if user_input.lower() == 'quit':
+            print("Exiting...")
             break
+        print("\nProcessing request...")
         response = agent.ask(user_input)
         print(f"Assistant: {response}")
 

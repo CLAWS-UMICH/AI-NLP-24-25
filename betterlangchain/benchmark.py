@@ -64,24 +64,32 @@ better_total_time = 0
 
 print("\nTesting Better Agent:")
 for test in test_cases:
+    # Clear history before each test
+    better_agent.clear_conversation_history()
+    
     start_time = time.time()
     better_response = better_agent.ask(test['prompt'])
-    print(test['prompt'])
     end_time = time.time()
     
-    # Filter out give_response from tools used
-    tools_used = [tool for tool in better_agent.get_tools_used() if tool != "give_response"]
-    expected_tools = test['expected_tools']
+    # Get unique tools used (excluding give_response)
+    tools_used = set(tool for tool in better_agent.get_tools_used() 
+                    if tool != "give_response")
+    expected_tools = set(test['expected_tools'])
     
-    # Calculate accuracy as percentage of correct tools used
-    correct_tools = len(set(tools_used) & set(expected_tools))
-    total_tools = len(expected_tools)
-    accuracy = (correct_tools / total_tools) * 100
+    # Calculate accuracy based on both precision and recall
+    true_positives = len(tools_used & expected_tools)
+    false_positives = len(tools_used - expected_tools)
+    false_negatives = len(expected_tools - tools_used)
+    
+    if len(expected_tools) == 0:
+        accuracy = 100.0 if len(tools_used) == 0 else 0.0
+    else:
+        precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+        recall = true_positives / len(expected_tools)
+        accuracy = (precision + recall) * 50  # Average of precision and recall, scaled to 100
     
     better_total_accuracy += accuracy
     better_total_time += (end_time - start_time)
-    
-    better_agent.clear_conversation_history()
 
 # Benchmark old agent
 old_total_accuracy = 0
