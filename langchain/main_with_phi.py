@@ -3,8 +3,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
 # Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
-model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2")
+tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("microsoft/Phi-3-mini-4k-instruct", trust_remote_code=True)
 
 # Define a function for generating responses with the Hugging Face model
 def generate_response(prompt):
