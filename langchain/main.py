@@ -10,7 +10,7 @@ class StreamingCallbackHandler(BaseCallbackHandler):
         print(token, end='', flush=True)
 
 llm = ChatOpenAI(
-    model_name="gpt-4o",
+    model_name="gpt-4o-mini",
     streaming=True,
     callbacks=[StreamingCallbackHandler()],
     verbose=False
@@ -19,7 +19,7 @@ agent = initialize_agent(
     tools=tools,
     llm=llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=False
+    verbose=False,
 )
 
 def langchain_agent_response(query: str):
