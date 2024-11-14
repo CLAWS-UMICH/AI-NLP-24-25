@@ -3,6 +3,10 @@ from langchain.agents import initialize_agent, AgentType
 from langchain.callbacks.base import BaseCallbackHandler
 from tools import tools
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # for streaming response
 class StreamingCallbackHandler(BaseCallbackHandler):
@@ -24,7 +28,8 @@ callback_handler = StreamingCallbackHandler()
 llm = ChatOpenAI(
     model_name="gpt-4o-mini",
     streaming=True,
-    verbose=False
+    verbose=False,
+    api_key=os.getenv("OPENAI_API_KEY"),
 )
 
 agent = initialize_agent(
