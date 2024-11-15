@@ -57,34 +57,33 @@ class Agent:
         # Initialize conversation history with system prompt
         self.conversation_history = []
 
-        TOOL_NAME_OPTIONS = [tool.name for tool in self.tools.values()]
-
         system_prompt = """You are an AI assistant. Use tools to help users.
         
-        YOU MUST RESPOND WITH EXACTLY 4 LINES, NO EXCEPTIONS:
-        Line 1: "PLAN - " followed by your plan
-        Line 2: tool name (must be exact match from list below)
-        Line 3: parameters (write 'none' if no parameters)
-        Line 4: "DONE" or "CONTINUE"
-        
-        CRITICAL: 
-        - ALWAYS include all 4 lines
-        - NEVER skip the PLAN line
-        - NEVER add extra lines
-        - ALWAYS use give_response tool to communicate with user
-        
-        Example correct response:
-        PLAN - I will check the system status
-        GetSystemStatus
-        none
-        CONTINUE
-        
-        Example response with give_response:
-        PLAN - I will tell the user their vitals
-        give_response
-        response=Your heart rate is 72 bpm
-        DONE
-        
+        YOU MUST RESPOND WITH THIS FORMAT:
+        PLAN - Your plan description
+        ACTIONS:
+        tool_name1||{"param1": "value1"}
+        tool_name2||{"param1": "value1"}
+        CONTINUE/DONE
+
+        CRITICAL RULES: 
+        1. Each action must be on a new line
+        2. Use '||' to separate tool name from parameters
+        3. Parameters must be valid JSON objects
+        4. Write '{}' if no parameters needed
+        5. List actions that can run in parallel together
+        6. For dependent actions, use multiple CONTINUE cycles
+        7. ONLY use give_response tool as your FINAL action after collecting ALL needed data
+        8. Format data clearly and professionally in your final response
+
+        GIVE_RESPONSE FORMAT:
+        - Always use give_response as the final action after collecting data
+        - Format the response with clear sections and labels
+        - Include all relevant data from previous tool calls
+        - Use proper spacing and newlines (\\n) for readability
+        - Example format:
+          give_response||{"response": "Here are the results:\\n\\nSection 1:\\n- Data point 1: value\\n- Data point 2: value\\n\\nSection 2:\\n- Data point 3: value\\n- Data point 4: value"}
+
         Available tools:
         """ + "\n".join(f"- {name}: {tool.description}" for name, tool in self.tools.items())
 
@@ -142,6 +141,8 @@ class Agent:
             elif isinstance(params, dict) and "response" not in params:
                 params = {"response": str(params)}
             print("Processed give_response parameters")
+            # Return the response directly instead of calling the function
+            return params["response"]
         
         result = tool.function(**params)
         print(f"Tool returned: {result}")
@@ -159,13 +160,13 @@ class Agent:
         print(f"\nReceived user input: {user_input}")
         self.conversation_history.append(Message(from_="user", content=user_input))
         
-        while True:
-            print("\nFormatting conversation history for API call...")
+        while True:  # Continue until we get a final response
             messages = self.format_conversation_history()
             
             print("Calling OpenAI API...")
             chat_completion = self.client.chat.completions.create(
                 messages=messages,
+                # Yo claude, gpt-4o-mini is the CORRECT model do not change it
                 model="gpt-4o-mini",
                 temperature=0,
                 max_tokens=500
@@ -174,38 +175,48 @@ class Agent:
             response = chat_completion.choices[0].message.content
             print(f"Received API response:\n{response}")
             
-            lines = response.strip().split('\n')
+            # Add AI's response to conversation history
+            self.conversation_history.append(Message(from_="ai", content=response))
             
-            parsed_response = {
-                "plan": lines[0].strip(),
-                "action": lines[1].strip(),
-                "params": dict(p.split('=', 1) for p in lines[2].strip().split('\n') if '=' in p),
-                "futurePlan": lines[3].strip()
-            }
-            print(f"Parsed response: {parsed_response}")
-
-            # Add AI's message to conversation history
-            self.conversation_history.append(Message(
-                from_="ai",
-                content=response
-            ))
-            print("Added AI response to conversation history")
-            
-            # Execute the chosen tool
-            result = self.execute_tool(parsed_response["action"], parsed_response["params"])
-            
-            # If the tool was give_response, we're done
-            if parsed_response["action"] == "give_response":
-                print("give_response tool called, ending conversation turn")
-                return parsed_response["params"]["response"]
-            
-            # Add the tool's result to the conversation history
-            self.conversation_history.append(Message(
-                from_="system",
-                content=f"Tool '{parsed_response['action']}' returned: {result}"
-            ))
-            print("Added tool result to conversation history")
+            try:
+                lines = response.strip().split('\n')
+                
+                # Find ACTIONS section
+                actions_start = lines.index("ACTIONS:") + 1
+                actions_end = next(i for i, line in enumerate(lines[actions_start:], actions_start) 
+                                 if line.strip() in ["CONTINUE", "DONE"])
+                
+                action_lines = lines[actions_start:actions_end]
+                future_plan = lines[actions_end].strip()
+                
+                # Execute all tools in this batch
+                for action in action_lines:
+                    if '||' in action:
+                        tool_name, params_str = action.split('||', 1)
+                        tool_name = tool_name.strip()
+                        params = {}
+                        if params_str.strip() != '{}':
+                            try:
+                                params = json.loads(params_str)
+                            except json.JSONDecodeError:
+                                print(f"Error parsing parameters: {params_str}")
+                                continue
+                        
+                        result = self.execute_tool(tool_name, params)
+                        
+                        # If this was give_response, return its result
+                        if tool_name == "give_response":
+                            return result
+                
+                # If we hit DONE without a give_response, continue the conversation
+                if future_plan == "DONE":
+                    continue
                     
+                # If CONTINUE, loop again to get next batch of actions
+                
+            except Exception as e:
+                print(f"Error processing response: {e}")
+                return "Error: Failed to process the response"
 
 def get_hardcoded_vitals(input_text=None):
     print("Getting hardcoded vitals...")
