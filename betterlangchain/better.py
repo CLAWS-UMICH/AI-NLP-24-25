@@ -4,6 +4,8 @@ from openai import OpenAI
 import time
 import os
 from dotenv import load_dotenv
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 
 load_dotenv()
 
@@ -89,6 +91,9 @@ class Agent:
 
         self.conversation_history.append(Message(from_="system", content=system_prompt))
         print("System prompt added to conversation history")
+        
+        self.executor = ThreadPoolExecutor(max_workers=10)
+        print("Thread pool executor initialized")
     
     def get_tools_used(self):
         tools = [item.tool_used for item in self.conversation_history if isinstance(item, FunctionCall)]
@@ -156,6 +161,25 @@ class Agent:
         
         return result
 
+    def execute_tools_parallel(self, actions):
+        print(f"\nExecuting {len(actions)} tools in parallel")
+        futures = []
+        
+        for action in actions:
+            tool_name = action['tool']
+            params = action['params']
+            
+            if tool_name == "give_response":
+                return self.execute_tool(tool_name, params)
+                
+            futures.append(
+                self.executor.submit(self.execute_tool, tool_name, params)
+            )
+        
+        # Wait for all futures to complete
+        concurrent.futures.wait(futures)
+        return [f.result() for f in futures]
+
     def ask(self, user_input):
         print(f"\nReceived user input: {user_input}")
         self.conversation_history.append(Message(from_="user", content=user_input))
@@ -189,7 +213,8 @@ class Agent:
                 action_lines = lines[actions_start:actions_end]
                 future_plan = lines[actions_end].strip()
                 
-                # Execute all tools in this batch
+                # Parse all actions first
+                parsed_actions = []
                 for action in action_lines:
                     if '||' in action:
                         tool_name, params_str = action.split('||', 1)
@@ -201,12 +226,17 @@ class Agent:
                             except json.JSONDecodeError:
                                 print(f"Error parsing parameters: {params_str}")
                                 continue
-                        
-                        result = self.execute_tool(tool_name, params)
-                        
-                        # If this was give_response, return its result
-                        if tool_name == "give_response":
-                            return result
+                        parsed_actions.append({
+                            'tool': tool_name,
+                            'params': params
+                        })
+                
+                # Execute all tools in parallel
+                results = self.execute_tools_parallel(parsed_actions)
+                
+                # If we got a response (from give_response), return it
+                if isinstance(results, str):
+                    return results
                 
                 # If we hit DONE without a give_response, continue the conversation
                 if future_plan == "DONE":
