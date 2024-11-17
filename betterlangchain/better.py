@@ -290,7 +290,7 @@ class Agent:
             continue
 
 def get_hardcoded_vitals(input_text=None):
-    print("Getting hardcoded vitals... (.5 second delay)")
+    print("Getting hardcoded vitals... (5 second delay)")
     time.sleep(5)  # Simulate API delay
     vitals = {
         "heart_rate": "72 bpm",
@@ -302,7 +302,7 @@ def get_hardcoded_vitals(input_text=None):
     return vitals
 
 def get_system_status(input_text=None):
-    print("Getting system status... (.5 second delay)")
+    print("Getting system status... (5 second delay)")
     time.sleep(5)  # Simulate heavy computation
     status = {
         "cpu_usage": "45%",
