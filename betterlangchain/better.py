@@ -234,6 +234,7 @@ class Agent:
                         # Check for completion
                         if line in ["CONTINUE", "DONE"]:
                             response_complete = True
+                            print("--------------Response complete!--------------")
                             break
                             
                         # Process action line
@@ -268,9 +269,9 @@ class Agent:
             raise
         finally:
             # Always wait for pending tools to complete
-            print("Waiting for tools to complete...")
+            print("--------------Waiting for tools to complete...--------------")
             results = action_tracker.wait_for_all()
-            print(f"All tools completed. Results: {results}")
+            print(f"--------------All tools completed. Results: {results}--------------")
             
         return None  # If we get here, no give_response was found
 
@@ -289,8 +290,8 @@ class Agent:
             continue
 
 def get_hardcoded_vitals(input_text=None):
-    # print("Getting hardcoded vitals... (.5 second delay)")
-    # time.sleep(.5)  # Simulate API delay
+    print("Getting hardcoded vitals... (.5 second delay)")
+    time.sleep(5)  # Simulate API delay
     vitals = {
         "heart_rate": "72 bpm",
         "blood_pressure": "120/80 mmHg",
@@ -301,8 +302,8 @@ def get_hardcoded_vitals(input_text=None):
     return vitals
 
 def get_system_status(input_text=None):
-    # print("Getting system status... (.5 second delay)")
-    # time.sleep(.5)  # Simulate heavy computation
+    print("Getting system status... (.5 second delay)")
+    time.sleep(5)  # Simulate heavy computation
     status = {
         "cpu_usage": "45%",
         "memory_usage": "60%",
