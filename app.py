@@ -1,19 +1,18 @@
+import sys
+sys.path.insert(0, './langchain')
+from main import langchain_agent_response
+#from langchain.main import langchain_agent_response
 from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/')
-def gfg():
-   return 'geeksforgeeks'
-
-@app.route('/hello/<name>')
-def hello_name(name):
-   return 'Hello %s!' % name
 
 @app.route('/parsevc', methods =['POST'])
 def submit_data():
-   data = request.form
-   return data
+   print(request.form)
+   query = request.form['question']
+   response = langchain_agent_response(query)
+   return response
 
 
 
