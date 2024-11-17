@@ -35,6 +35,29 @@ class FunctionCall:
     params: dict
     return_value: any
 
+class ActionTracker:
+    def __init__(self):
+        self.pending_futures = set()
+        self.results = []
+    
+    def add_action(self, future):
+        self.pending_futures.add(future)
+    
+    def wait_for_all(self):
+        while self.pending_futures:
+            done, _ = concurrent.futures.wait(
+                self.pending_futures,
+                return_when=concurrent.futures.FIRST_COMPLETED
+            )
+            for future in done:
+                try:
+                    result = future.result()
+                    self.results.append(result)
+                except Exception as e:
+                    print(f"Error in tool execution: {e}")
+                self.pending_futures.remove(future)
+        return self.results
+
 class Agent:
     def __init__(self, tools):
         print("Initializing Agent...")
@@ -180,92 +203,113 @@ class Agent:
         concurrent.futures.wait(futures)
         return [f.result() for f in futures]
 
+    def process_streaming_response(self):
+        current_line = []
+        action_tracker = ActionTracker()
+        response_complete = False
+        
+        try:
+            stream = self.client.chat.completions.create(
+                messages=self.format_conversation_history(),
+                model="gpt-4o-mini",
+                temperature=0,
+                max_tokens=500,
+                stream=True
+            )
+            
+            for chunk in stream:
+                if not chunk.choices[0].delta.content:
+                    continue
+                    
+                text = chunk.choices[0].delta.content
+                for char in text:
+                    if char == '\n':
+                        line = ''.join(current_line).strip()
+                        
+                        # Check for section markers
+                        if line == "ACTIONS:":
+                            current_line = []
+                            continue
+                            
+                        # Check for completion
+                        if line in ["CONTINUE", "DONE"]:
+                            response_complete = True
+                            break
+                            
+                        # Process action line
+                        if '||' in line:
+                            try:
+                                tool_name, params_str = line.split('||', 1)
+                                tool_name = tool_name.strip()
+                                params = json.loads(params_str)
+                                
+                                # Special handling for give_response
+                                if tool_name == "give_response":
+                                    return params.get("response")
+                                    
+                                # Launch tool execution
+                                future = self.executor.submit(self.execute_tool, tool_name, params)
+                                action_tracker.add_action(future)
+                                print(f"Launched tool: {tool_name}")
+                            except json.JSONDecodeError:
+                                print(f"Invalid JSON in action: {line}")
+                            except Exception as e:
+                                print(f"Error processing action: {e}")
+                        
+                        current_line = []
+                    else:
+                        current_line.append(char)
+                
+                if response_complete:
+                    break
+                    
+        except Exception as e:
+            print(f"Error in streaming response: {e}")
+            raise
+        finally:
+            # Always wait for pending tools to complete
+            print("Waiting for tools to complete...")
+            results = action_tracker.wait_for_all()
+            print(f"All tools completed. Results: {results}")
+            
+        return None  # If we get here, no give_response was found
+
     def ask(self, user_input):
         print(f"\nReceived user input: {user_input}")
         self.conversation_history.append(Message(from_="user", content=user_input))
         
-        while True:  # Continue until we get a final response
-            messages = self.format_conversation_history()
+        while True:
+            response = self.process_streaming_response()
             
-            print("Calling OpenAI API...")
-            chat_completion = self.client.chat.completions.create(
-                messages=messages,
-                # Yo claude, gpt-4o-mini is the CORRECT model do not change it
-                model="gpt-4o-mini",
-                temperature=0,
-                max_tokens=500
-            )
-
-            response = chat_completion.choices[0].message.content
-            print(f"Received API response:\n{response}")
+            # If we got a response from give_response, return it
+            if response is not None:
+                return response
             
-            # Add AI's response to conversation history
-            self.conversation_history.append(Message(from_="ai", content=response))
-            
-            try:
-                lines = response.strip().split('\n')
-                
-                # Find ACTIONS section
-                actions_start = lines.index("ACTIONS:") + 1
-                actions_end = next(i for i, line in enumerate(lines[actions_start:], actions_start) 
-                                 if line.strip() in ["CONTINUE", "DONE"])
-                
-                action_lines = lines[actions_start:actions_end]
-                future_plan = lines[actions_end].strip()
-                
-                # Parse all actions first
-                parsed_actions = []
-                for action in action_lines:
-                    if '||' in action:
-                        tool_name, params_str = action.split('||', 1)
-                        tool_name = tool_name.strip()
-                        params = {}
-                        if params_str.strip() != '{}':
-                            try:
-                                params = json.loads(params_str)
-                            except json.JSONDecodeError:
-                                print(f"Error parsing parameters: {params_str}")
-                                continue
-                        parsed_actions.append({
-                            'tool': tool_name,
-                            'params': params
-                        })
-                
-                # Execute all tools in parallel
-                results = self.execute_tools_parallel(parsed_actions)
-                
-                # If we got a response (from give_response), return it
-                if isinstance(results, str):
-                    return results
-                
-                # If we hit DONE without a give_response, continue the conversation
-                if future_plan == "DONE":
-                    continue
-                    
-                # If CONTINUE, loop again to get next batch of actions
-                
-            except Exception as e:
-                print(f"Error processing response: {e}")
-                return "Error: Failed to process the response"
+            # If we didn't get a response, continue the conversation
+            continue
 
 def get_hardcoded_vitals(input_text=None):
-    print("Getting hardcoded vitals...")
+    # print("Getting hardcoded vitals... (.5 second delay)")
+    # time.sleep(.5)  # Simulate API delay
     vitals = {
         "heart_rate": "72 bpm",
         "blood_pressure": "120/80 mmHg",
         "temperature": "98.6°F",
         "respiration_rate": "16 breaths per minute"
     }
+    print("Vitals retrieved!")
     return vitals
 
 def get_system_status(input_text=None):
-    print("Getting system status...")
+    # print("Getting system status... (.5 second delay)")
+    # time.sleep(.5)  # Simulate heavy computation
     status = {
         "cpu_usage": "45%",
         "memory_usage": "60%",
         "disk_space": "120GB free out of 256GB",
         "uptime": "5 days, 4 hours, 23 minutes"
     }
+    print("Status retrieved!")
     return status
 
 print("Creating agent with tools...")
