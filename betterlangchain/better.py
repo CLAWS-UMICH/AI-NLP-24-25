@@ -58,11 +58,39 @@ class ActionTracker:
                 self.pending_futures.remove(future)
         return self.results
 
+def default_openai_chat(messages, on_token):
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    stream = client.chat.completions.create(
+        messages=[{"role": msg["role"], "content": msg["content"]} for msg in messages],
+        model="gpt-4o-mini",
+        temperature=0,
+        max_tokens=500,
+        stream=True
+    )
+    
+    collected_content = []
+    for chunk in stream:
+        if chunk.choices[0].delta.content:
+            content = chunk.choices[0].delta.content
+            collected_content.append(content)
+            result = on_token(content)
+            if result:
+                return result
+    
+    # If we didn't get a result through the callback, return the full content
+    if collected_content:
+        return on_token(''.join(collected_content))
+    return None
+
 class Agent:
-    def __init__(self, tools):
+    def __init__(self, tools, chat_model=None):
         print("Initializing Agent...")
         self.tools = {tool.name: tool for tool in tools}
         print(f"Loaded {len(tools)} tools: {', '.join(self.tools.keys())}")
+        
+        # Use default OpenAI chat if no model provided
+        self.chat_model = chat_model or default_openai_chat
+        print("Chat model initialized")
         
         self.client = OpenAI(
             api_key=os.getenv("OPENAI_API_KEY"),
@@ -206,74 +234,83 @@ class Agent:
     def process_streaming_response(self):
         current_line = []
         action_tracker = ActionTracker()
-        response_complete = False
         
+        def process_token(token):
+            nonlocal current_line
+            
+            for char in token:
+                if char == '\n':
+                    line = ''.join(current_line).strip()
+                    if not line:  # Skip empty lines
+                        current_line = []
+                        continue
+                    
+                    # Check for section markers
+                    if line == "ACTIONS:":
+                        current_line = []
+                        continue
+                        
+                    # Check for completion
+                    if line in ["CONTINUE", "DONE"]:
+                        current_line = []
+                        continue
+                        
+                    # Process action line
+                    if '||' in line:
+                        try:
+                            tool_name, params_str = line.split('||', 1)
+                            tool_name = tool_name.strip()
+                            
+                            # Find the end of the JSON object
+                            json_depth = 0
+                            json_end = 0
+                            for i, c in enumerate(params_str):
+                                if c == '{':
+                                    json_depth += 1
+                                elif c == '}':
+                                    json_depth -= 1
+                                    if json_depth == 0:
+                                        json_end = i + 1
+                                        break
+                            
+                            params_json = params_str[:json_end]
+                            params = json.loads(params_json)
+                            
+                            # Special handling for give_response
+                            if tool_name == "give_response":
+                                return params.get("response")
+                                
+                            # Launch tool execution
+                            future = self.executor.submit(self.execute_tool, tool_name, params)
+                            action_tracker.add_action(future)
+                            print(f"Launched tool: {tool_name}")
+                        except json.JSONDecodeError as e:
+                            print(f"Invalid JSON in action: {line}")
+                            print(f"JSON error: {e}")
+                        except Exception as e:
+                            print(f"Error processing action: {e}")
+                    
+                    current_line = []
+                else:
+                    current_line.append(char)
+            return None
+
         try:
-            stream = self.client.chat.completions.create(
+            result = self.chat_model(
                 messages=self.format_conversation_history(),
-                model="gpt-4o-mini",
-                temperature=0,
-                max_tokens=500,
-                stream=True
+                on_token=process_token
             )
             
-            for chunk in stream:
-                if not chunk.choices[0].delta.content:
-                    continue
-                    
-                text = chunk.choices[0].delta.content
-                for char in text:
-                    if char == '\n':
-                        line = ''.join(current_line).strip()
-                        
-                        # Check for section markers
-                        if line == "ACTIONS:":
-                            current_line = []
-                            continue
-                            
-                        # Check for completion
-                        if line in ["CONTINUE", "DONE"]:
-                            response_complete = True
-                            print("--------------Response complete!--------------")
-                            break
-                            
-                        # Process action line
-                        if '||' in line:
-                            try:
-                                tool_name, params_str = line.split('||', 1)
-                                tool_name = tool_name.strip()
-                                params = json.loads(params_str)
-                                
-                                # Special handling for give_response
-                                if tool_name == "give_response":
-                                    return params.get("response")
-                                    
-                                # Launch tool execution
-                                future = self.executor.submit(self.execute_tool, tool_name, params)
-                                action_tracker.add_action(future)
-                                print(f"Launched tool: {tool_name}")
-                            except json.JSONDecodeError:
-                                print(f"Invalid JSON in action: {line}")
-                            except Exception as e:
-                                print(f"Error processing action: {e}")
-                        
-                        current_line = []
-                    else:
-                        current_line.append(char)
-                
-                if response_complete:
-                    break
+            if result:
+                return result
                     
         except Exception as e:
             print(f"Error in streaming response: {e}")
             raise
         finally:
-            # Always wait for pending tools to complete
-            print("--------------Waiting for tools to complete...--------------")
             results = action_tracker.wait_for_all()
-            print(f"--------------All tools completed. Results: {results}--------------")
             
-        return None  # If we get here, no give_response was found
+        return None
 
     def ask(self, user_input):
         print(f"\nReceived user input: {user_input}")
@@ -291,7 +328,6 @@ class Agent:
 
 def get_hardcoded_vitals(input_text=None):
     print("Getting hardcoded vitals... (5 second delay)")
-    time.sleep(5)  # Simulate API delay
     vitals = {
         "heart_rate": "72 bpm",
         "blood_pressure": "120/80 mmHg",
@@ -303,7 +339,6 @@ def get_hardcoded_vitals(input_text=None):
 
 def get_system_status(input_text=None):
     print("Getting system status... (5 second delay)")
-    time.sleep(5)  # Simulate heavy computation
     status = {
         "cpu_usage": "45%",
         "memory_usage": "60%",
