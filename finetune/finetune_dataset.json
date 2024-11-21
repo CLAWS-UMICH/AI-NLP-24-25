@@ -1,0 +1,35 @@
+[
+    {
+        "input": "What are my vitals?",
+        "output": "PLAN - Retrieve the user's vitals using the GetHardcodedVitals tool.\nACTIONS:\nGetHardcodedVitals||{}\nDONE\ngive_response||{\"response\": \"Here are your vitals:\\n\\n- Heart Rate: 72 bpm\\n- Blood Pressure: 120/80 mmHg\\n- Temperature: 98.6°F\\n- Respiration Rate: 16 breaths per minute\"}"
+    },
+    {
+        "input": "What is my heart rate?",
+        "output": "PLAN - Retrieve the user's vitals and extract the heart rate information.\nACTIONS:\nGetHardcodedVitals||{}\nDONE\ngive_response||{\"response\": \"Your heart rate is 72 bpm.\"}"
+    },
+    {
+        "input": "Check my CPU usage.",
+        "output": "PLAN - Retrieve the system's status and extract the CPU usage information.\nACTIONS:\nGetSystemStatus||{}\nDONE\ngive_response||{\"response\": \"Your current CPU usage is 45%.\"}"
+    },
+    {
+        "input": "What is the system uptime?",
+        "output": "PLAN - Retrieve the system's status and extract the uptime information.\nACTIONS:\nGetSystemStatus||{}\nDONE\ngive_response||{\"response\": \"The system has been up for 5 days, 4 hours, and 23 minutes.\"}"
+    },
+    {
+        "input": "Can you give me my vitals and system status?",
+        "output": "PLAN - Retrieve both the user's vitals and system status.\nACTIONS:\nGetHardcodedVitals||{}\nGetSystemStatus||{}\nDONE\ngive_response||{\"response\": \"Here is the information you requested:\\n\\nVitals:\\n- Heart Rate: 72 bpm\\n- Blood Pressure: 120/80 mmHg\\n- Temperature: 98.6°F\\n- Respiration Rate: 16 breaths per minute\\n\\nSystem Status:\\n- CPU Usage: 45%\\n- Memory Usage: 60%\\n- Disk Space: 120GB free out of 256GB\\n- Uptime: 5 days, 4 hours, 23 minutes.\"}"
+    },
+    {
+        "input": "What is my blood pressure?",
+        "output": "PLAN - Retrieve the user's vitals and extract the blood pressure information.\nACTIONS:\nGetHardcodedVitals||{}\nDONE\ngive_response||{\"response\": \"Your blood pressure is 120/80 mmHg.\"}"
+    },
+    {
+        "input": "Tell me the system's memory usage.",
+        "output": "PLAN - Retrieve the system's status and extract the memory usage information.\nACTIONS:\nGetSystemStatus||{}\nDONE\ngive_response||{\"response\": \"The system's memory usage is currently 60%.\"}"
+    },
+    {
+        "input": "Give me my respiration rate and system uptime.",
+        "output": "PLAN - Retrieve the user's vitals and system status, then extract respiration rate and uptime.\nACTIONS:\nGetHardcodedVitals||{}\nGetSystemStatus||{}\nDONE\ngive_response||{\"response\": \"Here is the information you requested:\\n\\n- Respiration Rate: 16 breaths per minute\\n- System Uptime: 5 days, 4 hours, 23 minutes.\"}"
+    }
+    
+]
