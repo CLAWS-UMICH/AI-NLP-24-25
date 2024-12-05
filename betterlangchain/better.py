@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
-
+import random
 load_dotenv()
 
 @dataclass
@@ -35,53 +35,19 @@ class FunctionCall:
     params: dict
     return_value: any
 
-class ActionTracker:
-    def __init__(self):
-        self.pending_futures = set()
-        self.results = []
-    
-    def add_action(self, future):
-        self.pending_futures.add(future)
-    
-    def wait_for_all(self):
-        while self.pending_futures:
-            done, _ = concurrent.futures.wait(
-                self.pending_futures,
-                return_when=concurrent.futures.FIRST_COMPLETED
-            )
-            for future in done:
-                try:
-                    result = future.result()
-                    self.results.append(result)
-                except Exception as e:
-                    print(f"Error in tool execution: {e}")
-                self.pending_futures.remove(future)
-        return self.results
-
-def default_openai_chat(messages, on_token):
+def default_openai_chat(messages):
+    print("OPEN AI CALL, SENDING MESSAGE",messages)
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    stream = client.chat.completions.create(
+    response = client.chat.completions.create(
         messages=[{"role": msg["role"], "content": msg["content"]} for msg in messages],
         model="gpt-4o-mini",
         temperature=0,
         max_tokens=500,
-        stream=True
+        stream=False
     )
     
-    collected_content = []
-    for chunk in stream:
-        if chunk.choices[0].delta.content:
-            content = chunk.choices[0].delta.content
-            collected_content.append(content)
-            result = on_token(content)
-            if result:
-                return result
+    return response.choices[0].message.content
     
-    # If we didn't get a result through the callback, return the full content
-    if collected_content:
-        return on_token(''.join(collected_content))
-    return None
-
 class Agent:
     def __init__(self, tools, chat_model=None):
         print("Initializing Agent...")
@@ -189,16 +155,7 @@ class Agent:
             raise ValueError(f"Unknown tool: {tool_name}")
         
         tool = self.tools[tool_name]
-        
-        # Handle give_response params
-        if tool_name == "give_response":
-            if isinstance(params, str):
-                params = {"response": params}
-            elif isinstance(params, dict) and "response" not in params:
-                params = {"response": str(params)}
-            print("Processed give_response parameters")
-            # Return the response directly instead of calling the function
-            return params["response"]
+    
         
         result = tool.function(**params)
         print(f"Tool returned: {result}")
@@ -212,127 +169,96 @@ class Agent:
         
         return result
 
-    def execute_tools_parallel(self, actions):
-        print(f"\nExecuting {len(actions)} tools in parallel")
-        futures = []
-        
-        for action in actions:
-            tool_name = action['tool']
-            params = action['params']
-            
-            if tool_name == "give_response":
-                return self.execute_tool(tool_name, params)
-                
-            futures.append(
-                self.executor.submit(self.execute_tool, tool_name, params)
-            )
-        
-        # Wait for all futures to complete
-        concurrent.futures.wait(futures)
-        return [f.result() for f in futures]
-
-    def process_streaming_response(self):
-        current_line = []
-        action_tracker = ActionTracker()
-        
-        def process_token(token):
-            nonlocal current_line
-            
-            for char in token:
-                if char == '\n':
-                    line = ''.join(current_line).strip()
-                    if not line:  # Skip empty lines
-                        current_line = []
-                        continue
-                    
-                    # Check for section markers
-                    if line == "ACTIONS:":
-                        current_line = []
-                        continue
-                        
-                    # Check for completion
-                    if line in ["CONTINUE", "DONE"]:
-                        current_line = []
-                        continue
-                        
-                    # Process action line
-                    if '||' in line:
-                        try:
-                            tool_name, params_str = line.split('||', 1)
-                            tool_name = tool_name.strip()
-                            
-                            # Find the end of the JSON object
-                            json_depth = 0
-                            json_end = 0
-                            for i, c in enumerate(params_str):
-                                if c == '{':
-                                    json_depth += 1
-                                elif c == '}':
-                                    json_depth -= 1
-                                    if json_depth == 0:
-                                        json_end = i + 1
-                                        break
-                            
-                            params_json = params_str[:json_end]
-                            params = json.loads(params_json)
-                            
-                            # Special handling for give_response
-                            if tool_name == "give_response":
-                                return params.get("response")
-                                
-                            # Launch tool execution
-                            future = self.executor.submit(self.execute_tool, tool_name, params)
-                            action_tracker.add_action(future)
-                            print(f"Launched tool: {tool_name}")
-                        except json.JSONDecodeError as e:
-                            print(f"Invalid JSON in action: {line}")
-                            print(f"JSON error: {e}")
-                        except Exception as e:
-                            print(f"Error processing action: {e}")
-                    
-                    current_line = []
-                else:
-                    current_line.append(char)
-            return None
-
+    def process_response(self):
         try:
-            result = self.chat_model(
+            response = self.chat_model(
                 messages=self.format_conversation_history(),
-                on_token=process_token
             )
-            
-            if result:
-                return result
+
+            self.conversation_history.append(Message(from_="ai", content=response))
+
+            print("OPEN AI CALL, LATEST RESPONSE",response)
+            # Collect all actions
+            actions = []
+            current_section = None
+            for line in response.split('\n'):
+                line = line.strip()
+                if not line:
+                    continue
                     
-        except Exception as e:
-            print(f"Error in streaming response: {e}")
-            raise
-        finally:
-            results = action_tracker.wait_for_all()
+                if line == "ACTIONS:":
+                    current_section = "actions"
+                    continue
+                elif line in ["CONTINUE", "DONE"]:
+                    break
+                elif '||' in line and current_section == "actions":
+                    try:
+                        tool_name, params_str = line.split('||', 1)
+                        tool_name = tool_name.strip()
+                        params = json.loads(params_str)
+                        actions.append((tool_name, params))
+                    except Exception as e:
+                        print(f"Error parsing action: {e}")
             
-        return None
+            # Execute all tools in parallel
+            if actions:
+                futures = []
+                for tool_name, params in actions:
+                    if tool_name == "give_response":
+                        # Store give_response for last
+                        final_response = params.get("response")
+                    else:
+                        # Execute other tools in parallel
+                        future = self.executor.submit(self.execute_tool, tool_name, params)
+                        futures.append(future)
+                
+                # Wait for all tools to complete if there are any
+                if futures:
+                    concurrent.futures.wait(futures)
+                
+                # If we had a give_response, return it after all tools complete
+                if 'final_response' in locals():
+                    save_conversation_history(self.conversation_history)
+                    return final_response
+            
+            # No give_response found, continue the conversation
+            return None
+                
+        except Exception as e:
+            print(f"Error in response processing: {e}")
+            raise
 
     def ask(self, user_input):
         print(f"\nReceived user input: {user_input}")
         self.conversation_history.append(Message(from_="user", content=user_input))
         
         while True:
-            response = self.process_streaming_response()
-            
+            response = self.process_response()
+            print("THIS IS THE LATEST RESPONSE",response)
             # If we got a response from give_response, return it
             if response is not None:
                 return response
             
             # If we didn't get a response, continue the conversation
             continue
+def save_conversation_history(conversation_history):
+    print("Saving conversation history...")
+    # Create conversation_logs directory if it doesn't exist
+    os.makedirs('conversation_logs', exist_ok=True)
+    timestamp = time.strftime('%Y%m%d_%H%M%S')
+    filepath = os.path.join('conversation_logs', f'conversation_history_{timestamp}.json')
+    with open(filepath, 'w') as f:
+        json.dump([item.__dict__ for item in conversation_history], f, indent=2)
+    print(f"Conversation history saved to {filepath}")
 
-def get_hardcoded_vitals(input_text=None):
+
+def get_vitals(input_text=None):
     print("Getting hardcoded vitals... (5 second delay)")
     vitals = {
-        "heart_rate": "72 bpm",
-        "blood_pressure": "120/80 mmHg",
-        "temperature": "98.6°F",
-        "respiration_rate": "16 breaths per minute"
+        "heart_rate": f"{random.randint(60,100)} bpm",
+        "blood_pressure": f"{random.randint(90,140)}/{random.randint(60,90)} mmHg",
+        "temperature": f"{round(random.uniform(97.0,99.5),1)}°F", 
+        "respiration_rate": f"{random.randint(12,20)} breaths per minute"
     }
     print("Vitals retrieved!")
     return vitals
@@ -340,10 +266,10 @@ def get_hardcoded_vitals(input_text=None):
 def get_system_status(input_text=None):
     print("Getting system status... (5 second delay)")
     status = {
-        "cpu_usage": "45%",
-        "memory_usage": "60%",
-        "disk_space": "120GB free out of 256GB",
-        "uptime": "5 days, 4 hours, 23 minutes"
+        "cpu_usage": f"{random.randint(20,90)}%",
+        "memory_usage": f"{random.randint(30,95)}%", 
+        "disk_space": f"{random.randint(50,200)}GB free out of 256GB",
+        "uptime": f"{random.randint(1,30)} days, {random.randint(0,23)} hours, {random.randint(0,59)} minutes"
     }
     print("Status retrieved!")
     return status
@@ -351,15 +277,15 @@ def get_system_status(input_text=None):
 print("Creating agent with tools...")
 agent = Agent([
     Tool(
-        name="GetHardcodedVitals",
-            description="Returns a hardcoded set of vitals: heart rate, blood pressure, temperature, and respiration rate.",
+        name="GetVitals",
+            description="Returns a set of vitals: heart rate, blood pressure, temperature, and respiration rate.",
             params=[],
             return_description="Dictionary containing vital signs",
-            function=get_hardcoded_vitals
+            function=get_vitals
         ),
         Tool(
             name="GetSystemStatus",
-            description="Returns a mock system status including CPU usage, memory usage, disk space, and uptime.",
+            description="Returns the current system status including CPU usage, memory usage, disk space, and uptime.",
             params=[],
             return_description="Dictionary containing system status information",
             function=get_system_status
