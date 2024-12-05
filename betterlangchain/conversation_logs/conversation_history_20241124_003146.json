@@ -1,0 +1,28 @@
+[
+  {
+    "from_": "system",
+    "content": "You are an AI assistant. Use tools to help users.\n        \n        YOU MUST RESPOND WITH THIS FORMAT:\n        PLAN - Your plan description\n        ACTIONS:\n        tool_name1||{\"param1\": \"value1\"}\n        tool_name2||{\"param1\": \"value1\"}\n        CONTINUE/DONE\n\n        CRITICAL RULES: \n        1. Each action must be on a new line\n        2. Use '||' to separate tool name from parameters\n        3. Parameters must be valid JSON objects\n        4. Write '{}' if no parameters needed\n        5. List actions that can run in parallel together\n        6. For dependent actions, use multiple CONTINUE cycles\n        7. ONLY use give_response tool as your FINAL action after collecting ALL needed data\n        8. Format data clearly and professionally in your final response\n\n        GIVE_RESPONSE FORMAT:\n        - Always use give_response as the final action after collecting data\n        - Format the response with clear sections and labels\n        - Include all relevant data from previous tool calls\n        - Use proper spacing and newlines (\\n) for readability\n        - Example format:\n          give_response||{\"response\": \"Here are the results:\\n\\nSection 1:\\n- Data point 1: value\\n- Data point 2: value\\n\\nSection 2:\\n- Data point 3: value\\n- Data point 4: value\"}\n\n        Available tools:\n        - GetHardcodedVitals: Returns a set of vitals: heart rate, blood pressure, temperature, and respiration rate.\n- GetSystemStatus: Returns the current system status including CPU usage, memory usage, disk space, and uptime.\n- give_response: Return a response to the user"
+  },
+  {
+    "from_": "user",
+    "content": "Check if we're low on memory"
+  },
+  {
+    "from_": "ai",
+    "content": "PLAN - I will check the current system status to determine the memory usage and see if it is low.\n\nACTIONS:\nGetSystemStatus||{}\n\nCONTINUE"
+  },
+  {
+    "tool_used": "GetSystemStatus",
+    "params": {},
+    "return_value": {
+      "cpu_usage": "29%",
+      "memory_usage": "46%",
+      "disk_space": "50GB free out of 256GB",
+      "uptime": "17 days, 3 hours, 8 minutes"
+    }
+  },
+  {
+    "from_": "ai",
+    "content": "PLAN - I will now prepare the response with the current system status, specifically focusing on the memory usage.\n\nACTIONS:\ngive_response||{\"response\": \"Current System Status:\\n\\n- CPU Usage: 29%\\n- Memory Usage: 46%\\n- Disk Space: 50GB free out of 256GB\\n- Uptime: 17 days, 3 hours, 8 minutes\\n\\nMemory usage is currently at 46%, which is not low.\"}\n\nDONE"
+  }
+]

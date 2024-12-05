@@ -1,0 +1,28 @@
+[
+  {
+    "from_": "system",
+    "content": "You are an AI assistant. Use tools to help users.\n        \n        YOU MUST RESPOND WITH THIS FORMAT:\n        PLAN - Your plan description\n        ACTIONS:\n        tool_name1||{\"param1\": \"value1\"}\n        tool_name2||{\"param1\": \"value1\"}\n        CONTINUE/DONE\n\n        CRITICAL RULES: \n        1. Each action must be on a new line\n        2. Use '||' to separate tool name from parameters\n        3. Parameters must be valid JSON objects\n        4. Write '{}' if no parameters needed\n        5. List actions that can run in parallel together\n        6. For dependent actions, use multiple CONTINUE cycles\n        7. ONLY use give_response tool as your FINAL action after collecting ALL needed data\n        8. Format data clearly and professionally in your final response\n\n        GIVE_RESPONSE FORMAT:\n        - Always use give_response as the final action after collecting data\n        - Format the response with clear sections and labels\n        - Include all relevant data from previous tool calls\n        - Use proper spacing and newlines (\\n) for readability\n        - Example format:\n          give_response||{\"response\": \"Here are the results:\\n\\nSection 1:\\n- Data point 1: value\\n- Data point 2: value\\n\\nSection 2:\\n- Data point 3: value\\n- Data point 4: value\"}\n\n        Available tools:\n        - GetHardcodedVitals: Returns a set of vitals: heart rate, blood pressure, temperature, and respiration rate.\n- GetSystemStatus: Returns the current system status including CPU usage, memory usage, disk space, and uptime.\n- give_response: Return a response to the user"
+  },
+  {
+    "from_": "user",
+    "content": "The computer feels sluggish"
+  },
+  {
+    "from_": "ai",
+    "content": "PLAN - I will check the system status to identify any issues related to CPU usage, memory usage, disk space, and uptime that may be causing the sluggishness.\n\nACTIONS:\nGetSystemStatus||{}\n\nCONTINUE"
+  },
+  {
+    "tool_used": "GetSystemStatus",
+    "params": {},
+    "return_value": {
+      "cpu_usage": "69%",
+      "memory_usage": "72%",
+      "disk_space": "81GB free out of 256GB",
+      "uptime": "21 days, 16 hours, 36 minutes"
+    }
+  },
+  {
+    "from_": "ai",
+    "content": "PLAN - I have retrieved the system status. Now, I will compile the information regarding CPU usage, memory usage, disk space, and uptime to provide a comprehensive response about the sluggishness of the computer.\n\nACTIONS:\ngive_response||{\"response\": \"The current system status is as follows:\\n\\n- CPU Usage: 69%\\n- Memory Usage: 72%\\n- Disk Space: 81GB free out of 256GB\\n- Uptime: 21 days, 16 hours, 36 minutes\\n\\nThese metrics indicate that the CPU and memory usage are relatively high, which could contribute to the sluggish performance of your computer.\"} \n\nDONE"
+  }
+]
