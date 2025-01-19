@@ -3,7 +3,7 @@ from typing import List, Dict
 import pandas as pd
 from datasets import Dataset
 
-def load_training_data(file_path: str = "training_data.json") -> List[Dict]:
+def load_training_data(file_path: str = "more_new_training_data.json") -> List[Dict]:
     """Load existing training data from JSON file."""
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
@@ -48,7 +48,7 @@ def format_for_flan(data: List[Dict]) -> List[Dict]:
     
     return examples
 
-def create_flan_dataset(output_file: str = "flan_training_data.json"):
+def create_flan_dataset(output_file: str = "more_new_flan_training_data.json"):
     """Create a dataset formatted for FLAN-T5 fine-tuning."""
     # Load existing training data
     training_data = load_training_data()

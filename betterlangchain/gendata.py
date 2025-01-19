@@ -3,6 +3,66 @@ from tools import get_vitals, get_system_status
 
 # List of diverse prompts for testing agent responses
 test_prompts = [
+    # Basic vitals queries
+    "What are my vitals?",
+    "What is my heart rate?",
+    "What is my blood pressure?",
+    "What is my temperature?",
+    "What is my respiration rate?",
+    
+    # System status queries 
+    "Check my CPU usage",
+    "What is the system uptime?",
+    "How much memory is being used?",
+    "What's the disk space status?",
+    "Give me the full system status",
+    
+    # Combined queries
+    "Can you give me my vitals and system status?",
+    "Show me both health and system metrics",
+    "What are all my stats?",
+    "Give me a complete status report",
+    "Check everything and report back",
+    
+    # Specific combinations
+    "Tell me my heart rate and CPU usage",
+    "What's my blood pressure and memory usage?",
+    "Check my temperature and disk space",
+    "Report on respiration and uptime",
+    
+    # Direct questions
+    "Is the CPU running hot?",
+    "Am I running a fever?",
+    "Is my heart rate elevated?",
+    "How's the memory holding up?",
+    
+    # Status requests
+    "Run a system check",
+    "Do a health check",
+    "Full diagnostic please",
+    "Status update needed",
+    "Give me the latest readings",
+    
+    # Focused queries
+    "Just the vitals please",
+    "System metrics only",
+    "Health stats report",
+    "Computer status only",
+    
+    # Multiple metrics
+    "Heart rate and blood pressure check",
+    "CPU and memory status",
+    "Temperature and respiration check",
+    "Disk space and uptime report",
+    
+    # General inquiries
+    "How am I doing?",
+    "How's the system running?",
+    "Everything okay?",
+    "Status report"
+# ]
+
+# old_prompts = [
     # Basic health and system queries
     "How am I doing?",
     "Run a full diagnostic",
@@ -90,7 +150,7 @@ def main():
         print(f"\nProcessing prompt {i}/{len(test_prompts)}: {prompt}")
         agent.clear_conversation_history()
         response = agent.ask(prompt)
-        print(f"Response received and saved")
+        print(f"Response received and saved ------------------------------------------------------------------------")
 
 if __name__ == "__main__":
     main()

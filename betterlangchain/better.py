@@ -94,6 +94,9 @@ class Agent:
         6. For dependent actions, use multiple CONTINUE cycles
         7. ONLY use give_response tool as your FINAL action after collecting ALL needed data
         8. Format data clearly and professionally in your final response
+        9. YOU MUST ALWAYS HAVE A PLAN SECTION, ACTIONS SECTION, AND CONTINUE/DONE SECTION
+        10. Be precise. If the user asks for a specific metric, don't give them more then what they need.
+        11. If the users query is more general, give them a reasonable answer.
 
         GIVE_RESPONSE FORMAT:
         - Always use give_response as the final action after collecting data

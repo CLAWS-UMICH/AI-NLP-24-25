@@ -86,7 +86,7 @@ def format_for_training(chains: List[List[Dict]]) -> List[Dict]:
     
     return training_data
 
-def combine_conversation_data(output_file: str = "training_data.json"):
+def combine_conversation_data(output_file: str = "more_new_training_data.json"):
     """Main function to combine and process conversation data."""
     # Load all conversation files
     conversations = load_conversation_files()
