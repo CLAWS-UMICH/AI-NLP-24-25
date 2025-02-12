@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 import random
+
 load_dotenv()
 
 @dataclass
@@ -35,7 +36,9 @@ class FunctionCall:
     params: dict
     return_value: any
 
+
 def default_openai_chat(messages):
+    # return get_model_response(messages)
     print("OPEN AI CALL, SENDING MESSAGE",messages)
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     response = client.chat.completions.create(
@@ -49,7 +52,7 @@ def default_openai_chat(messages):
     return response.choices[0].message.content
     
 class Agent:
-    def __init__(self, tools, chat_model=None):
+    def __init__(self, tools, chat_model=None,conversation_folder="conversation_data"):
         print("Initializing Agent...")
         self.tools = {tool.name: tool for tool in tools}
         print(f"Loaded {len(tools)} tools: {', '.join(self.tools.keys())}")
@@ -221,7 +224,7 @@ class Agent:
                 
                 # If we had a give_response, return it after all tools complete
                 if 'final_response' in locals():
-                    save_conversation_history(self.conversation_history)
+                    save_conversation_history(self.conversation_history,self.conversation_folder)
                     return final_response
             
             # No give_response found, continue the conversation
@@ -244,14 +247,16 @@ class Agent:
             
             # If we didn't get a response, continue the conversation
             continue
-def save_conversation_history(conversation_history):
+def save_conversation_history(conversation_history,conversation_folder):
     print("Saving conversation history...")
     # Create conversation_logs directory if it doesn't exist
-    os.makedirs('conversation_logs', exist_ok=True)
+
+    os.makedirs(conversation_folder, exist_ok=True)
     timestamp = time.strftime('%Y%m%d_%H%M%S')
-    filepath = os.path.join('conversation_logs', f'conversation_history_{timestamp}.json')
+    filepath = os.path.join(conversation_folder, f'conversation_history_{timestamp}.json')
     with open(filepath, 'w') as f:
         json.dump([item.__dict__ for item in conversation_history], f, indent=2)
+
     print(f"Conversation history saved to {filepath}")
 
 

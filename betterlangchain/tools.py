@@ -48,3 +48,25 @@ tools = [
         function=get_system_status
     )
 ]
+
+def ClickTasks():
+    print("Clicking tasks...")
+    return {"opened": True}
+
+
+def ClickNavigation():
+    print("Clicking navigation...")
+    return {"opened": True}
+
+def ClickMessages():
+    print("Clicking messages...")
+    return {"opened": True}
+
+def ClickSamples():
+    print("Clicking samples...")
+    return {"opened": True}
+
+def ClickVitals():
+    print("Clicking vitals...")
+    return {"opened": True}
+

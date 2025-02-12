@@ -3,7 +3,7 @@ import os
 from typing import List, Dict
 from pathlib import Path
 
-def load_conversation_files(logs_dir: str = "conversation_logs") -> List[Dict]:
+def load_conversation_files(logs_dir: str = "screen_conversation_logs") -> List[Dict]:
     """Load all JSON conversation files from the specified directory."""
     conversations = []
     for file_path in Path(logs_dir).glob("*.json"):
@@ -86,7 +86,7 @@ def format_for_training(chains: List[List[Dict]]) -> List[Dict]:
     
     return training_data
 
-def combine_conversation_data(output_file: str = "more_new_training_data.json"):
+def combine_conversation_data(output_file: str = "screen_training_data.json"):
     """Main function to combine and process conversation data."""
     # Load all conversation files
     conversations = load_conversation_files()

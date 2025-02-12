@@ -1,66 +1,45 @@
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
-from threading import Thread
-import os
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import TextStreamer
 
-def load_model(model_path):
-    """Load the fine-tuned model and tokenizer."""
-    # Load model in bfloat16 for efficiency
-    model = AutoModelForCausalLM.from_pretrained(
-        model_path,
-        device_map="auto",
-        torch_dtype=torch.bfloat16,
-    )
-    # Load the tokenizer from the original model
-    tokenizer = AutoTokenizer.from_pretrained("HuggingFaceTB/SmolLM2-1.7B")
-    return model, tokenizer
+# Load model for CPU
+model = AutoModelForCausalLM.from_pretrained("model")  # Path to your saved model
+tokenizer = AutoTokenizer.from_pretrained("model")
 
-def generate_text(model, tokenizer, prompt, max_length=2048):
-    """Generate text from the model with streaming output."""
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    
-    # Setup streamer for token-by-token generation
-    streamer = TextIteratorStreamer(tokenizer)
-    
-    # Generate text in a separate thread
-    generation_kwargs = dict(
-        inputs=inputs["input_ids"],
-        max_length=max_length,
-        temperature=0.7,
-        do_sample=True,
-        streamer=streamer,
+# Format prompt template
+alpaca_prompt = """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
+
+### Instruction:
+{}
+
+### Input:
+{}
+
+### Response:
+{}"""
+
+def get_model_response(instruction, input_text="", output=""):
+    # Format the input
+    prompt = alpaca_prompt.format(instruction, input_text, output)
+    inputs = tokenizer([prompt], return_tensors="pt")
+
+    # Generate output
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=128,
+        use_cache=True
     )
     
-    thread = Thread(target=model.generate, kwargs=generation_kwargs)
-    thread.start()
+    # Decode and extract just the response
+    full_response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     
-    # Print tokens as they're generated
-    generated_text = ""
-    for new_text in streamer:
-        print(new_text, end="", flush=True)
-        generated_text += new_text
+    # Find the start of the response section
+    response_start = full_response.find("### Response:") + len("### Response:")
     
-    return generated_text
-
-def main():
-    # Path to your fine-tuned model (current directory where safetensor files are)
-    model_path = "."
-    
-    if not os.path.exists("model.safetensors.index.json"):
-        print("Error: Model files not found in current directory")
-        return
-    
-    print("Loading model...")
-    model, tokenizer = load_model(model_path)
-    print("Model loaded successfully!")
-    
-    while True:
-        prompt = input("\nEnter your prompt (or 'quit' to exit): ")
-        if prompt.lower() == 'quit':
-            break
-        
-        print("\nGenerating response...\n")
-        generate_text(model, tokenizer, prompt)
+    # Return just the response text, stripped of whitespace
+    return full_response[response_start:].strip()
 
 if __name__ == "__main__":
-    main() 
+    # Example usage
+    instruction = "How am I doing?"
+    response = get_model_response(instruction)
+    print(response)
