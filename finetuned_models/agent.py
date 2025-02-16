@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from dataclasses import dataclass
 import json
 from openai import OpenAI
@@ -7,32 +11,33 @@ from dotenv import load_dotenv
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 import random   
-from run_model import generate_response
+from finetuned_models.run_model import generate_response
+# from api import ClickTasks, ClickNavigation, ClickMessages, ClickSamples, ClickVitals
 load_dotenv()
 
 
 
 
-def ClickTasks():
-    print("Clicking tasks...")
-    return {"opened": True}
+# def ClickTasks():
+#     print("Clicking tasks...")
+#     return {"opened": True}
 
 
-def ClickNavigation():
-    print("Clicking navigation...")
-    return {"opened": True}
+# def ClickNavigation():
+#     print("Clicking navigation...")
+#     return {"opened": True}
 
-def ClickMessages():
-    print("Clicking messages...")
-    return {"opened": True}
+# def ClickMessages():
+#     print("Clicking messages...")
+#     return {"opened": True}
 
-def ClickSamples():
-    print("Clicking samples...")
-    return {"opened": True}
+# def ClickSamples():
+#     print("Clicking samples...")
+#     return {"opened": True}
 
-def ClickVitals():
-    print("Clicking vitals...")
-    return {"opened": True}
+# def ClickVitals():
+#     print("Clicking vitals...")
+#     return {"opened": True}
 
 
 
@@ -367,48 +372,48 @@ print("Creating agent with tools...")
 #             function=get_system_status
 #         )
 #     ])
-agent = Agent([
-        Tool(
-            name="ClickTasks",
-            description="Opens the main task list interface.",
-            params=[],
-            return_description="True if successful, False otherwise",
-            function=ClickTasks
-        ),
-        Tool(
-            name="ClickNavigation", 
+# agent = Agent([
+#         Tool(
+#             name="ClickTasks",
+#             description="Opens the main task list interface.",
+#             params=[],
+#             return_description="True if successful, False otherwise",
+#             function=ClickTasks
+#         ),
+#         Tool(
+#             name="ClickNavigation", 
 
-            description="Opens the navigation interface.",
-            params=[],
-            return_description="True if successful, False otherwise",
-            function=ClickNavigation
+#             description="Opens the navigation interface.",
+#             params=[],
+#             return_description="True if successful, False otherwise",
+#             function=ClickNavigation
 
-        ),
-        Tool(
-            name="ClickMessages", 
-            description="Opens the messages interface.",
-            params=[],
-            return_description="True if successful, False otherwise",
-            function=ClickMessages
+#         ),
+#         Tool(
+#             name="ClickMessages", 
+#             description="Opens the messages interface.",
+#             params=[],
+#             return_description="True if successful, False otherwise",
+#             function=ClickMessages
 
-        ),
-        Tool(
-            name="ClickSamples", 
-            description="Opens the samples interface.",
-            params=[],
-            return_description="True if successful, False otherwise",
-            function=ClickSamples
+#         ),
+#         Tool(
+#             name="ClickSamples", 
+#             description="Opens the samples interface.",
+#             params=[],
+#             return_description="True if successful, False otherwise",
+#             function=ClickSamples
 
-        ),
-        Tool(
-            name="ClickVitals", 
-            description="Opens the vitals interface.",
-            params=[],
-            return_description="True if successful, False otherwise",
-            function=ClickVitals
+#         ),
+#         Tool(
+#             name="ClickVitals", 
+#             description="Opens the vitals interface.",
+#             params=[],
+#             return_description="True if successful, False otherwise",
+#             function=ClickVitals
 
-        )
-    ])
+#         )
+#     ])
 
 def main(): 
     print("\nAI Assistant ready! Type 'quit' to exit.")
