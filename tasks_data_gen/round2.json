@@ -1,0 +1,1486 @@
+[
+  {
+    "groupId": "800937",
+    "prompt": "In navigation could you add checking star charts to using stellar reference task?"
+  },
+  {
+    "groupId": "800937",
+    "prompt": "Let's get rid of the planetary flyby alignment task, we're not doing that anymore."
+  },
+  {
+    "groupId": "800937",
+    "prompt": "Under dust capture, just remove the microscopic imaging part, not needed."
+  },
+  {
+    "groupId": "800937",
+    "prompt": "Go ahead and mark the stellar reference navigation as done for this group."
+  },
+  {
+    "groupId": "800937",
+    "prompt": "We've already confirmed acknowledgements for recall. Please mark that subtask completed in the emergency broadcast."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "Can you make sure to include verifying audio clarity under the secure voice channel setup, for repairs."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "The emergency recall task in this section? We actually don't need it, please remove it completely."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "For the planetary flyby alignment task, get rid of the atmospheric buffer zone monitoring, scratch that subtask."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "The voice channels are secured, we can tick that whole repair task as completed now."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "I've finished driving the collection probe for the gas sample, mark it done in the geosampling task."
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Remember to add noting tool serial numbers as a subtask to documenting sampling conditions."
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Forget about testing radiation shielding for now, can we just delete that entire task?"
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Within the equipment status report, just take out attaching diagnostic logs. Not necessary."
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Okay, we're past the micrometeoroid swarm danger. Mark that emergency avoidance procedure as completed."
+  },
+  {
+    "groupId": "424947",
+    "prompt": "For the emergency airlock override, simulating rapid egress is finished, check it off."
+  },
+  {
+    "groupId": "445676",
+    "prompt": "Hey, in sample inventory updates, can we add checking for cross-contamination of containers?"
+  },
+  {
+    "groupId": "445676",
+    "prompt": "The comms loss simulation, it's been cancelled. Delete that whole emergency task please."
+  },
+  {
+    "groupId": "445676",
+    "prompt": "Under the hydroponics task, can we remove pruning plant growth? Its automatic now."
+  },
+  {
+    "groupId": "445676",
+    "prompt": "Alright the moon-earth-mars network is online. Task completed for navigation!"
+  },
+  {
+    "groupId": "445676",
+    "prompt": "We've checked the oxygen level status already today. Just mark it as done."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "Add checking guidance systems pre-flight to emergency ascent from surface."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "We are aborting the course through asteroid field, can we remove that navigation task please."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "For the sample marker deployment, just remove testing radio frequency ID, unnecessary step."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "The emergency airlock override test in this group is done, please mark it complete."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "I've recorded the sample properties, so that geosampling task is complete."
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Within solar panel deployment task, let's also add subtask 'secure hinges'."
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Actually, scrap the request for tech support, we fixed it ourselves. Delete that repair task."
+  },
+  {
+    "groupId": "140624",
+    "prompt": "For the sensitive data encoding, we won't use frequency hopping, remove that from subtasks."
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Team positions coordinated. Navigation task complete!"
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Diagnosing power grid fluctuations is finished.  Mark repair task as done please."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "Don't forget to include checking the cooling system as a subtask for diagnosing power fluctuations."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "The volcano glass sample collection, we are moving to a different area.  Let's remove that task for now."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "Under geological sample collection, remove perform initial spectrometry, we'll do it in the lab later."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "Electrolysis system is overhauled and running.  Repair task completed."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "Evasive maneuvers are programmed for the asteroid field course. Subtask done in navigation."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "We also need to note suit battery levels when performing UIA egress, could you add that?"
+  },
+  {
+    "groupId": "359041",
+    "prompt": "Maintenance blackout comms silence, no longer needed. Please remove that emergency task."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "For verifying comm systems, remove the check signal strength meter, its redundant."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "The emergency whistle protocol test is completed, emergency task is done."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "Seismic monitoring network is fully deployed now. Geosampling task done."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "Let’s add a reminder to activate comm logs to simulate comms loss in emergencies."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "We don’t need to maintain blackout comms anymore. We can delete that emergency task."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "Regarding sending a message to crew, can you remove 'verify recipient list', it is automatically populated."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "The station keeping maneuver is executed. Please mark navigation task completed."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "We’ve collected the solar wind particles now, can you complete that geosampling task?"
+  },
+  {
+    "groupId": "990763",
+    "prompt": "For the hydroponics, could you also add 'check humidity levels' as a subtask to maintenance?"
+  },
+  {
+    "groupId": "990763",
+    "prompt": "Actually, forget about measuring sample dimensions now, can we just delete that task?"
+  },
+  {
+    "groupId": "990763",
+    "prompt": "Under geological samples collection, just remove ‘perform initial spectrometry’ subtask."
+  },
+  {
+    "groupId": "990763",
+    "prompt": "Emergency ascent was initiated, so mark that emergency task as completed please."
+  },
+  {
+    "groupId": "990763",
+    "prompt": "We've finished deploying the seismic network. Geosampling task is done."
+  },
+  {
+    "groupId": "327379",
+    "prompt": "Let's also add 'confirming encryption key distribution' to the sensitive data encoding repair task."
+  },
+  {
+    "groupId": "327379",
+    "prompt": "The satellite handoff is no longer needed, remove the entire navigation task please."
+  },
+  {
+    "groupId": "327379",
+    "prompt": "No need to verify checksum validation when encoding data, scratch that subtask."
+  },
+  {
+    "groupId": "327379",
+    "prompt": "Satellite handoff coordinated and logged, can you mark navigation procedure complete?"
+  },
+  {
+    "groupId": "327379",
+    "prompt": "Encryption for sensitive data encoding is applied. Repair task done."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "Within sample packaging, lets ensure to add a subtask of 'apply biohazard labels' before transport."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "We decided against an emergency course reversal. Can we delete that emergency task now?"
+  },
+  {
+    "groupId": "936600",
+    "prompt": "In verifying comms, just remove the test for VHF channels. UHF is sufficient."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "Communication systems are verified and working.  Repair task completed."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "Sample packaging is ready for transport, mark the geosampling task as complete."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "When issuing rover commands we also need to 'check power levels of rover', can you add this to subtasks?"
+  },
+  {
+    "groupId": "430568",
+    "prompt": "The emergency airlock override test, we're going to skip it, delete that emergency task please."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "For space suit cooling garment servicing, let's remove verifying moisture wicking - seems redundant."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "Hydroponic oxygen farm maintenance for vitals is now complete."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "Rover movement commands have been issued successfully.  Mark rover task as done."
+  },
+  {
+    "groupId": "249826",
+    "prompt": "For docking procedure add 'confirm docking ring alignment' as a subtask."
+  },
+  {
+    "groupId": "249826",
+    "prompt": "Actually, we are not returning to lunar lander just yet. Delete that navigation task for now."
+  },
+  {
+    "groupId": "249826",
+    "prompt": "Regarding message to crew, we can skip 'verify recipient list' - the system auto fills now."
+  },
+  {
+    "groupId": "249826",
+    "prompt": "Battery arrays charging process is complete, repair task done and dusted."
+  },
+  {
+    "groupId": "249826",
+    "prompt": "Spacesuit vitals check is completed.  Vitals task marked done."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "Remember to also 'note camera model' in the subtasks for taking sample site photos."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "No longer necessary to test radiation shielding for this group.  Delete vitals task."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "For verifying comms, just remove ‘check signal strength meter’. Already part of other tests."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "Sample site photos are taken and tagged. Geosampling task complete."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "We have verified comms systems, the repair task is done now."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "We should also include 'check dust seal integrity' for robotic arm joint repair task."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "Don't worry about marking hazardous terrain, we've re-routed. Please delete that navigation task."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "Under implementing secure voice channels, we don't need to monitor for eavesdropping, scratch that subtask."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "Team positions are coordinated and logged. Navigation task complete."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "Emergency shelter point located. Emergency task completed and marked as done."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "Lets add 'confirm trajectory with pilot' as a subtask to emergency course reversal."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "Actually we won’t plot course through asteroid field anymore, delete navigation task please."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "For analog backup comms test, remove ‘verify analog signal clarity’ as it’s implicit in practicing Morse code."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "Emergency course reversal maneuver is done. Emergency task completed."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "We’ve tested the analog backup comms, the repair task is done now."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "For specimen container labelling, make sure to add 'include crew initials' in the subtasks too."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "Forget calibrating lunar south pole beacons now, can we delete that whole navigation task please."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "No need to monitor AM frequencies in analog backup comms test, remove subtask."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "Specimen container is labelled correctly, geosampling task done and dusted."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "We tested the analog backup comms already. Mark repair task completed."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "Add 'document sensor calibration values' to calibrating lunar south pole beacons task."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "No need to navigate during solar storm anymore, let's delete that emergency task."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "Under charge battery arrays, can we remove ‘balance cell voltages’? Its done automatically now."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "Navigation using stellar reference is finished.  Mark navigation task completed."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "Primary life support is activated now, so vitals task complete."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "When contacting mission control, add 'log sent data size' as a subtask, please."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "Let's just scratch optimize trajectory, fuel is not an issue anymore, delete navigation task."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "In implementing secure voice channels, let's remove the 'monitor for eavesdropping' step. Overkill."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "Avoiding danger zone is complete, navigation task marked as done."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "We've sent message to crew about sector 3, mark navigation task complete."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "Remember to 'check probe integrity pre-deployment' in regolith gas sample collection."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "Actually, lets not dock with space station in this task group, delete the navigation task for now."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "Under labelling specimen containers, no need for 'apply hazard warnings', remove that subtask."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "Navigating back to lunar lander is completed. Navigation task marked as done."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "Regolith gas samples are collected. Geosampling task completed."
+  },
+  {
+    "groupId": "929513",
+    "prompt": "For heat shield integrity, lets include 'check for panel separation' in the inspection procedure."
+  },
+  {
+    "groupId": "929513",
+    "prompt": "We've decided against solar panel array deployment in this task group, remove repair task."
+  },
+  {
+    "groupId": "929513",
+    "prompt": "In airlock override test, no need to check emergency lighting again, just delete that subtask."
+  },
+  {
+    "groupId": "929513",
+    "prompt": "Harvesting vacuum frozen ices is completed. Mark geosampling task done."
+  },
+  {
+    "groupId": "929513",
+    "prompt": "Emergency airlock override test is successful. Emergency task completed."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "When establishing laser comms, make sure to also 'verify optical path alignment'."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "We're not deploying seismic monitoring network in this task group, delete geosampling task."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "For waypoint placement, we don't need 'set temporary marker', remove that subtask."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "UIA egress procedure is complete. Rover task is done."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "Navigated back to lunar lander. Navigation task done for this group."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "Let’s add 'verify power cables integrity' to deploying seismic network in geosampling tasks."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "We are skipping the moon-Earth-Mars network setup now. Delete the navigation task."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "For sample property recording, we don't need to test magnetic response for this type, just remove that subtask."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "Lunar rover convoy is coordinated now.  Rover task complete."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "Distance tracking for navigation task is all set, marked complete."
+  },
+  {
+    "groupId": "474813",
+    "prompt": "Include 'check sensor power status' in calibrating meteorology sensors repair tasks."
+  },
+  {
+    "groupId": "474813",
+    "prompt": "Forget about rover commands, its on auto now.  Delete rover task."
+  },
+  {
+    "groupId": "474813",
+    "prompt": "Under habitat inflation test, let’s remove 'clear deployment area', area is already clear."
+  },
+  {
+    "groupId": "474813",
+    "prompt": "Emergency backup systems are activated, mark emergency task as completed."
+  },
+  {
+    "groupId": "474813",
+    "prompt": "Volcanic glass spherules are collected. Geosampling task finished."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "Add subtask 'check battery status of sensors' to seismic monitoring network deployment."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "We don't actually need emergency shelter point location task anymore, please remove that emergency task."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "For rover convoy coordination, remove subtask 'implement swarm intelligence routing' - not applicable to this convoy."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "Laser comms link established, repair task completed and marked as done."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "We've completed aligning for planetary flyby for navigation, mark navigation as complete."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "For life support reconfiguration, remember to add 'monitor suit pressure alarms' to the subtasks."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "Actually, skip relay through orbital data, direct link is now up, delete navigation task."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "Under coordinate team positions navigation task, remove 'broadcast movement plan' as we are staying put."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "Team positions are coordinated for vitals relay task. Navigation task complete."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "Requesting technical support repair task for the group, marked completed."
+  },
+  {
+    "groupId": "923364",
+    "prompt": "We need to add 'verify data integrity after compression' subtask to sharing scientific data."
+  },
+  {
+    "groupId": "923364",
+    "prompt": "Forget about coordinating multi-spectrum blackout, situation changed. Delete that emergency task."
+  },
+  {
+    "groupId": "923364",
+    "prompt": "Within emergency ascent procedure, remove the 'override auto-navigation' subtask, we are using auto nav."
+  },
+  {
+    "groupId": "923364",
+    "prompt": "Moon-earth-mars network is established. Navigation task completed!"
+  },
+  {
+    "groupId": "923364",
+    "prompt": "Battery arrays charged successfully.  Repair task complete."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "For deploying sample beacon, also 'check battery indicator before deployment' subtask."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "Let's skip geological sample collection now, delete that geosampling task for the moment."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "Under secure voice implementation, can we remove 'establish code phrases'? Using biometrics only."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "Sample beacon deployed at site.  Geosampling task complete."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "Mission objectives have been re-confirmed. Navigation task done."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "Remember to 'check rover wheel calibration' in autonomous exploration loop programming."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "Maintain blackout comms silence is unnecessary. Delete emergency task please."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "For sample inventory update, can we just remove ‘archive in central database’ subtask - it’s automatic now."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "Autonomous exploration loop is programmed and running.  Rover task completed."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "Lunar lander navigation is finished, so navigation task complete."
+  },
+  {
+    "groupId": "210397",
+    "prompt": "For sample collection from polar shadow regions, lets remember 'wear thermal gloves' as subtask."
+  },
+  {
+    "groupId": "210397",
+    "prompt": "Test emergency water reclamation isn't needed in this group. Remove emergency task."
+  },
+  {
+    "groupId": "210397",
+    "prompt": "In solar flare isotope collection, let’s not 'compare to background levels', not necessary for these isotopes."
+  },
+  {
+    "groupId": "210397",
+    "prompt": "Moon-Earth-Mars network is now operational, mark navigation task as completed."
+  },
+  {
+    "groupId": "210397",
+    "prompt": "Relay through orbital data relay completed for navigation, task is done."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "Within the UIA egress procedure add 'record egress time in log' as a subtask too please."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "Document impact crater ejecta not relevant, let’s delete that geosampling task."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "For sample inventory updates, lets remove ‘transmit update to orbiter’. Data downlink is deferred."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "Polar shadow region samples harvested, mark geosampling task completed."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "Route to base calculation completed, so navigation task done."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "In extremophile culture harvest, remember to subtask ‘seal collection tool immediately'."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "Test emergency habitat anchoring – no longer needed, delete that emergency task."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "For sending message to crew, we don’t need 'get transmission confirmation' – confirmations are automatic now, remove that."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "Extremophile cultures are harvested, mark geosampling as done please."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "Message sent to crew successfully, mark navigation task completed."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "In emergency course reversal, make sure to include 'inform crew of maneuver' in the subtasks."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "Sample ancient lava flows is postponed, please delete that geosampling task."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "For sample dimension measurement, just remove ‘compare to nearby specimens’, unnecessary detail."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "Emergency course reversal is performed and trajectory verified. Emergency task is done."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "Sharing scientific data task completed, so geosampling is done."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "Lets add a subtask to equipment report ‘include power consumption data’."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "The comms loss simulation task in emergency section - we’re cancelling it, delete emergency task."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "For relaying orbital data, let's remove 'prioritize transmission queues' - default queue is fine."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "Equipment status report is generated, mark repair task as done please."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "Initiate emergency ascent procedure is done now. Mark emergency task as completed."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "In spacesuit cooling garment service, let's add subtask 'inspect water pump function'."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "Simulate total comms loss - we are going to skip that one, delete emergency task."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "For solar panel array deployment, lets remove subtask ‘confirm sun alignment angle’. Automatic alignment system is online."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "Emergency habitat anchoring test completed successfully. Mark emergency task as done."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "Calibrating meteorology sensors task done and dusted. Repair task completed."
+  },
+  {
+    "groupId": "720480",
+    "prompt": "When taking sample container photos, let’s remember to also add subtask 'check lighting conditions'."
+  },
+  {
+    "groupId": "720480",
+    "prompt": "Test emergency flashlight comms is no longer relevant. Delete the emergency task."
+  },
+  {
+    "groupId": "720480",
+    "prompt": "In equipment status report, lets not 'attach diagnostic logs', it's done automatically now - remove that subtask."
+  },
+  {
+    "groupId": "720480",
+    "prompt": "Orbital insertion burn completed. Navigation task done and marked as complete."
+  },
+  {
+    "groupId": "720480",
+    "prompt": "Document impact crater ejecta task for geosampling, mark completed please."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "Within meteorology sensor calibration, include ‘update sensor firmware’ as a subtask too, please."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "Actually, scratch mark hazardous terrain in quadrant 2 task, route has changed, delete navigation."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "In calibrating sample analysis tools, no need for 'validate calibration accuracy' subtask. Its implicitly verified during tests."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "Relay environmental readings for vitals is completed. Task marked as done."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "Reporting equipment status, that repair task is all finished now."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "Add subtask ‘confirm channel security’ to secure voice channel implementation."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "Coordinate multi-spectrum blackout, we no longer need to do this, please delete emergency task."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "For sample analysis tool calibration, we can remove 'run diagnostic sequence', it’s automatic."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "Calibrating sample analysis tools, geosampling repair task completed, done."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "Implement secure voice channels repair task, marked complete."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "Within planetary flyby alignment, make sure to add ‘engage trajectory correction thrusters’ to subtasks."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "Test emergency habitat separation is no longer needed, delete the emergency task."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "No need for radiation shielding test in this group, remove vitals task please."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "Test radiation shielding procedure completed. Vitals task marked as done."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "Planetary flyby alignment procedure completed for navigation. Mark navigation as complete."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "Lets add a subtask 'mark safe zones on map' to subsurface lava tube mapping."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "Diagnose power grid fluctuations task for repair - not needed anymore, delete it please."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "For encoding sensitive data, can we just remove 'fragment transmission packets', we will send as single packets now."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "Coordinate lunar rover convoy - rover task complete for this group."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "Subsurface lava tube mapping is complete. Mark geosampling task done."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "When recording sample properties, remember to add 'note sample origin' to the subtasks list."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "Repair robotic arm joint - not required, let's delete repair task from the list."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "For impact crater ejecta documentation, let's remove subtask ‘classify impactor type’. Focus is just on dispersion."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "Micrometeoroid swarm avoided and documented, emergency task complete now."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "Sample properties recorded for geosampling.  Task completed."
+  },
+  {
+    "groupId": "376010",
+    "prompt": "Add 'verify node power status' to surface repeater network deployment repair task."
+  },
+  {
+    "groupId": "376010",
+    "prompt": "Test emergency whistle protocol isn’t needed for this group. Delete the emergency task."
+  },
+  {
+    "groupId": "376010",
+    "prompt": "For autonomous exploration loop programing, remove subtask 'enable self-correction protocols'. Not using that in this loop."
+  },
+  {
+    "groupId": "376010",
+    "prompt": "Calibrated lunar south pole navigation beacons. Navigation task is completed."
+  },
+  {
+    "groupId": "376010",
+    "prompt": "Harvesting vacuum-frozen ices from geosampling. Mark task complete."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "For deploying sample marker beacon, make sure to include 'verify beacon visibility from orbit' to subtasks."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "Diagnose power grid fluctuations repair - we resolved it another way, delete the repair task."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "In atmospheric dust capture task, no need to ‘analyze ionic charge’ for this sample type, scratch subtask."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "Satellite handoff coordinated - navigation task is now complete."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "Measure sample dimensions for geosampling is done, mark as complete."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "Remember to add 'check cable insulation integrity' when deploying surface repeater network."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "Simulate total comms loss emergency scenario - we are going to skip, remove emergency task please."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "For secure voice channel implementation, remove subtask ‘monitor for eavesdropping’. Redundant step."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "Robotic arm joint repair task is completed now. Mark repair task as done."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "Avoidance of micrometeoroid swarm completed, emergency procedure task is done."
+  },
+  {
+    "groupId": "551058",
+    "prompt": "Within logging sample location, we need to also 'record ambient pressure' - please add that as subtask."
+  },
+  {
+    "groupId": "551058",
+    "prompt": "Test emergency habitat anchoring is no longer needed for this task group. Delete the emergency task."
+  },
+  {
+    "groupId": "551058",
+    "prompt": "For seismic monitoring network deployment, no need for 'sync detection thresholds' – units auto-sync."
+  },
+  {
+    "groupId": "551058",
+    "prompt": "UIA egress procedure done. Rover task marked complete."
+  },
+  {
+    "groupId": "551058",
+    "prompt": "Logging current sample location geosampling task completed. Marked as done."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "Remember to add 'note tag material type' in subtasks for label specimen container."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "Test emergency flashlight comms is unnecessary for this mission. Delete the emergency task."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "In coordinate satellite handoff, let’s remove subtask ‘log transfer completion’, logs are automated."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "Coordinate team positions in navigation complete, marked done."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "Label specimen container completed for geosampling. Task done."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "In performing orbital insertion burn, remember to 'monitor engine temperature' subtask."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "Track distance travelled navigation task, we don't need it anymore. Delete the navigation task please."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "For relay through orbital data relay, remove subtask ‘confirm Earth receipt’. We will check receipt ourselves later."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "Orbital insertion burn completed successfully. Navigation task marked done."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "Navigation to waypoint at coordinates is finished. Navigation task complete."
+  },
+  {
+    "groupId": "593033",
+    "prompt": "Lets also add 'check cooling fluid levels' subtask to emergency airlock override test."
+  },
+  {
+    "groupId": "593033",
+    "prompt": "Calculate optimal route to base navigation task is not needed, delete the navigation task."
+  },
+  {
+    "groupId": "593033",
+    "prompt": "For orbital insertion burn, can we remove subtask ‘verify engine gimbal range’? Standard engine, no need to verify."
+  },
+  {
+    "groupId": "593033",
+    "prompt": "Activate primary life support vitals procedure is complete now. Task marked done."
+  },
+  {
+    "groupId": "593033",
+    "prompt": "Report equipment status for repair is completed, task is done."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "When documenting sampling conditions, let's add 'note humidity' to subtask list."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "Program autonomous exploration loop - we're going manual route, delete rover task."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "Under calibrate sample analysis tools, remove subtask 'adjust spectrometer alignment'. Automatic alignment is functional."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "Sample collection of regolith gases for geosampling task, marked complete now."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "Emergency habitat inflation test completed and is successful, task is done."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "Remember to 'check orbital alignment with destination' for orbital insertion burn, add to subtasks."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "No need to verify communication systems in this task group, remove repair task please."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "Under waypoint placement, let’s remove 'set temporary marker'. Unnecessary step now."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "Orbital insertion burn completed for navigation. Navigation task is done."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "Harvest impact melt breccias, geosampling task marked as completed now."
+  },
+  {
+    "groupId": "900484",
+    "prompt": "For sample inventory update, also add ‘note any container damage’ as a subtask too."
+  },
+  {
+    "groupId": "900484",
+    "prompt": "We don’t need to navigate during solar storm now, we are inside habitat, delete emergency navigation task."
+  },
+  {
+    "groupId": "900484",
+    "prompt": "Under establish laser comms link, remove subtask ‘monitor beam dispersion’. Using point-to-point link only."
+  },
+  {
+    "groupId": "900484",
+    "prompt": "Spacesuit cooling garment service for repair task is now done."
+  },
+  {
+    "groupId": "900484",
+    "prompt": "Solar wind particles collected now for geosampling. Mark geosampling as done."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "Let’s add 'double check emergency broadcast frequencies' to broadcast emergency recall emergency task."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "Harvest vacuum-frozen ices collection is no longer priority. Delete geosampling task."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "For collecting volcanic glass, remove 'package in crush-proof cases'.  Using standard containers instead."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "Volcanic glass spherules are collected now. Geosampling task completed."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "Mission objectives re-confirmed in navigation. Navigation task marked complete."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "When sharing scientific data, make sure to also ‘document file naming convention’ as a subtask please."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "Inspect heat shield integrity is no longer a priority. Let’s delete the repair task."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "For sample packaging for transport, remove subtask ‘verify quarantine protocols’. Samples already cleared."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "Heat shield integrity is inspected.  Repair task completed."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "Package sample for transport task for geosampling is complete, mark as done."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "In subsurface lava tube mapping, remember to add 'verify data transmission to base' subtask."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "Trap micrometeorite impacts – not a priority now, remove geosampling task from current task group."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "For calibrate sample analysis tools, can we remove subtask 'test with control samples'? Calibration standards not yet available."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "Surface repeater network is deployed now. Repair task completed."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "Broadcast emergency recall procedure for emergency, completed and marked as done."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "Lets add 'verify tag adhesion' to specimen container label geosampling task subtasks."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "Navigate to designated waypoint alpha task, we don’t need anymore - delete the navigation task."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "For deploy solar panel array repair, remove subtask ‘confirm sun alignment angle’. Automatic alignment now active."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "Charge battery arrays procedure for repair task is complete. Marked as done."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "Place navigation waypoint at coordinates navigation task, done and dusted."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "When initiating emergency ascent, make sure to also add 'engage emergency beacons' as subtask."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "Let's skip verification of communication systems for repair task, delete repair task."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "In avoid marked danger zone, let's remove 'monitor proximity alerts' as we are rerouting far around zone."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "Check oxygen level status, vitals task, complete now."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "Emergency ascent initiation procedure for emergency, completed. Task marked as done."
+  },
+  {
+    "groupId": "310041",
+    "prompt": "For subsurface lava tube mapping, make sure to subtask 'document access points'."
+  },
+  {
+    "groupId": "310041",
+    "prompt": "Log current sample location for geosampling is not needed, delete geosampling task."
+  },
+  {
+    "groupId": "310041",
+    "prompt": "In emergency habitat inflation test, no need to 'check structural rigidity', testing inflation only now."
+  },
+  {
+    "groupId": "310041",
+    "prompt": "Establish meteor scatter link repair task is completed successfully, marked done."
+  },
+  {
+    "groupId": "310041",
+    "prompt": "Primary life support activation procedure for vitals, marked complete."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "Within document sampling conditions, we also need to subtask 'note atmospheric composition'."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "Forget about reporting equipment status for repair.  Delete repair task please."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "In stellar reference navigation, can we remove ‘cross-check with inertial measurement’? Redundant check step."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "Documenting sampling conditions geosampling task is finished, marked complete."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "Broadcast emergency recall procedure emergency task, done and dusted."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "When programming autonomous loop, let's also 'add obstacle avoidance training data' to subtasks list."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "Test emergency whistle protocol is not required anymore, please delete the emergency task."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "For service spacesuit cooling garment repair, we don't need to 'verify moisture wicking', redundant check, remove."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "Follow exploration path beta, navigation task for this group, marked complete."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "Emergency habitat anchoring test emergency task completed now, marked done."
+  },
+  {
+    "groupId": "947469",
+    "prompt": "Remember to also 'verify signal path' subtask for satellite handoff coordination navigation task."
+  },
+  {
+    "groupId": "947469",
+    "prompt": "Request technical support repair task is no longer necessary, please remove repair task."
+  },
+  {
+    "groupId": "947469",
+    "prompt": "For sending message to crew, let’s remove subtask 'verify recipient list', its automatically populated."
+  },
+  {
+    "groupId": "947469",
+    "prompt": "Satellite handoff coordination, navigation task completed now."
+  },
+  {
+    "groupId": "947469",
+    "prompt": "Emergency habitat anchoring procedure for emergency task is now finished."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "For specimen container labelling, remember to add subtask 'note container fill level'."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "Capture transient lunar phenomena geosampling task - no longer needed, delete geosampling task."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "In verify communication systems repair, remove subtask ‘verify backup transmitter’. Redundant check."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "Navigate back to lunar lander - navigation task complete now."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "Procedure documentation for navigation is finished, navigation task completed."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "Within update sample inventory task, let’s also 'record update operator ID' as a subtask too please."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "Contact mission control emergency procedure task - not needed for this group, please delete emergency task."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "For sample analysis tool calibration, we can remove ‘test with control samples’, using other standards now."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "Coordinate lunar rover convoy for rover task in this group, complete now."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "Primary life support activation for vitals task, completed and marked as done."
+  },
+  {
+    "groupId": "725809",
+    "prompt": "Remember to add 'check suit seals before reconfiguration' to reconfigure life support for EVA."
+  },
+  {
+    "groupId": "725809",
+    "prompt": "Service spacesuit cooling garment is not needed for this task group. Delete the repair task."
+  },
+  {
+    "groupId": "725809",
+    "prompt": "For confirm mission objectives navigation task, we don’t need subtask ‘obtain formal confirmation’ - checklist is enough."
+  },
+  {
+    "groupId": "725809",
+    "prompt": "Plotting course through asteroid field in navigation, complete and marked as done."
+  },
+  {
+    "groupId": "725809",
+    "prompt": "Check oxygen level status procedure for vitals, completed, task marked done."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "In package sample for transport task, we need to add subtask 'apply security seals' before transport."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "Test emergency airlock override procedure – no longer necessary. Delete the emergency task."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "For establishing moon-earth-mars network, lets remove 'stress-test bandwidth', focusing just on connectivity now."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "Lunar rover convoy coordination, rover task is complete for this group."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "Maintain blackout comms silence emergency task for group, completed, mark as done."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "Within sample core extraction, make sure to add 'store orientation markers' to the geosampling subtasks."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "No need to monitor spacesuit vitals signs in this group, delete vitals task please."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "For stellar reference navigation, just remove 'update dead reckoning system', redundant step in our nav process."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "Extracting core samples geosampling task completed and marked as done."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "Team positions coordinated, navigation procedure done now."
+  },
+  {
+    "groupId": "445692",
+    "prompt": "When issuing rover movement commands, also add 'confirm emergency stop functionality' as subtask please."
+  },
+  {
+    "groupId": "445692",
+    "prompt": "Maintain blackout comms silence - we are cancelling this in this task group. Delete the emergency task."
+  },
+  {
+    "groupId": "445692",
+    "prompt": "For calibrate lunar south pole beacons navigation, remove subtask ‘validate polar coordinate alignment’, alignment assumed correct."
+  },
+  {
+    "groupId": "445692",
+    "prompt": "Check oxygen level status task in vitals, completed now."
+  },
+  {
+    "groupId": "445692",
+    "prompt": "Rover movement commands task in rover group, marked as complete."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "Let’s add 'monitor antenna temperature' subtask to establish laser comms repair task."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "Service spacesuit cooling garment for repair task, not needed for this group, delete the repair task."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "For hazardous terrain marking, let's remove ‘update mission control’, update will be batched later."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "Emergency habitat anchoring is tested. Mark emergency task as completed."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "Low orbit station keeping maneuver performed and verified. Navigation task is complete."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "Remember to subtask 'verify beacon functionality' in emergency shelter location emergency task."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "No need to sample electrostatic dust layers for now. Delete geosampling task from the group."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "For maintaining blackout comms, can we remove subtask ‘monitor passive sensors only’? Focus is on radio silence only now."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "Sample electrostatic dust layers collection is done for geosampling. Mark as completed."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "Locate emergency shelter point - emergency task completed and marked as done."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "Let's add subtask 'check flashlight battery level' for emergency flashlight comms test emergency task."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "Document sampling conditions is no longer a priority now, remove geosampling task please."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "For sample site photos, can we remove 'tag with metadata'? Metadata will be added later via central system."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "Emergency flashlight comms testing for emergency group completed, marked as done."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "Taking sample site photos task completed, geosampling task marked done."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "For charging battery arrays task, we should also add subtask 'record charge completion time'."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "Sample ancient lava flows for geosampling task, we're going to skip this one. Delete geosampling task."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "In meteorology sensor calibration repair task, remove ‘align precipitation sensors’, irrelevant for current location."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "Program autonomous exploration loop, rover task, completed and marked as done."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "Charge battery arrays task is finished. Repair task completed."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "For lunar south pole navigation beacon calibration, also add 'confirm beacon ID' subtask please."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "Program autonomous exploration loop rover task - we're going manual route, delete rover task."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "In map subsurface lava tubes, can we remove ‘update geological database’? Update will be batched centrally."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "Avoid micrometeoroid swarm procedure in emergency completed, mark as done."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "Calculate optimal route to base, navigation task complete now."
+  },
+  {
+    "groupId": "451380",
+    "prompt": "Within hydroponics farm maintenance for vitals, let's also add 'check for fungal growth'."
+  },
+  {
+    "groupId": "451380",
+    "prompt": "Take sample site photos task for geosampling – not needed anymore, delete task."
+  },
+  {
+    "groupId": "451380",
+    "prompt": "For establish moon-Earth-Mars network navigation task, can we remove 'stress-test bandwidth'? Connectivity check sufficient now."
+  },
+  {
+    "groupId": "451380",
+    "prompt": "Optimize trajectory for fuel efficiency navigation task - marked complete for current task group."
+  },
+  {
+    "groupId": "451380",
+    "prompt": "Update sample inventory geosampling task is completed, mark as done."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "For plotting asteroid field course navigation task, we should also subtask 'upload course to autopilot'."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "Check oxygen level status vitals task - we just did it, delete task for current task group."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "In planetary flyby alignment navigation task, let’s not 'monitor atmospheric buffer zone'. Not applicable for this flyby type."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "Initiate emergency ascent procedure in emergency, task completed, marked as done."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "Solar wind particles collected, geosampling task is complete now."
+  },
+  {
+    "groupId": "700029",
+    "prompt": "For placing waypoint, we should also include 'cross-reference with existing waypoints' as a subtask."
+  }
+]

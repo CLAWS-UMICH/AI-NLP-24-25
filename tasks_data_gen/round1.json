@@ -1,0 +1,882 @@
+[
+  {
+    "groupId": "800937",
+    "prompt": "About aligning for the flyby, maybe we should also think about radiation levels during the pass."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "Can you add 'check connection to Earth' to the voice channel repair task?"
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Actually, scratch that 'log tool usage' subtask from documenting sampling conditions."
+  },
+  {
+    "groupId": "445676",
+    "prompt": "Mark the oxygen status check as completed, we just did that."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "Could you mark 'test radio ID' as done in the beacon deployment?"
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Let's add a subtask to the solar panel deployment, 'record deployment time'."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "Remove 'align precipitation sensors' from the meteorology calibration."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "Go ahead and complete the radiation shielding test, it's all set."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "We finished 'retrieve before degradation' for the solar wind particles, mark it done."
+  },
+  {
+    "groupId": "990763",
+    "prompt": "Add 'Review power consumption' to the seismic network deployment."
+  },
+  {
+    "groupId": "327379",
+    "prompt": "Take off 'verify checksum validation' from the sensitive data encoding, not needed."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "Mark 'secure in sample rack' as completed for sample packaging."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "Can you add 'test pump sounds' to the spacesuit cooling service?"
+  },
+  {
+    "groupId": "249826",
+    "prompt": "No need to 'confirm hard dock seal' for the station docking, we are skipping that."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "We're done with 'include scale reference' for the sample site photos, mark it as finished."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "Add a subtask 'check shelter comms' to locating the emergency shelter."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "Remove the entire 'test analog backup comms' task, we're not doing that now."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "Let's remove 'apply hazard warnings' from the specimen container labeling, it's redundant."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "Mark the 'charge battery arrays' task as complete."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "We've completed 'monitor core body temperature' for the spacesuit vitals."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "Add 'calibrate altimeter' to the elevation changes task."
+  },
+  {
+    "groupId": "929513",
+    "prompt": "Delete 'simulate re-entry stresses' from heat shield integrity check, not relevant."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "Mark 'monitor beam dispersion' as done for the laser comms link."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "Can you add 'note ambient light' to the sample polar regions collection?"
+  },
+  {
+    "groupId": "474813",
+    "prompt": "Remove 'align precipitation sensors' from meteorology calibration, sensor is broken."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "Mark the 'deploy solar panel array' repair task as completed."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "Add 'pack tools' to the EVA life support reconfiguration task."
+  },
+  {
+    "groupId": "923364",
+    "prompt": "Delete the 'diagnose power grid fluctuations' task, it resolved itself."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "Mark 'obtain formal confirmation' as done for mission objectives."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "Could you add 'document rover starting location' to the autonomous loop programming?"
+  },
+  {
+    "groupId": "210397",
+    "prompt": "Remove 'backup to local storage' from relaying environmental readings, we have enough backups."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "Mark 'classify impactor type' as completed for impact ejecta documentation."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "Add 'check tether length' to emergency habitat anchoring."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "Delete 'simulate re-entry stresses' from heat shield integrity, it's irrelevant here."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "Mark the 'relay through orbital data relay' navigation task as done."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "Can you add 'check habitat seal integrity' to emergency habitat separation test?"
+  },
+  {
+    "groupId": "720480",
+    "prompt": "Remove 'test emergency flashlight comms' task, we don't have time."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "Mark 'update mission control' as completed for hazardous terrain marking."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "Add 'test encryption key exchange' to secure voice channels implementation."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "Delete 'capture science data during pass' from planetary flyby alignment, science team is busy."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "Mark 'perform emergency course reversal' as complete, thankfully we didn't need it."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "Could you add 'check for dust contamination' to the robotic arm repair?"
+  },
+  {
+    "groupId": "376010",
+    "prompt": "Remove 'test emergency whistle protocol' task, not a priority."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "Mark 'measure sample dimensions' as done for volcanic glass spherules collection."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "Can you add 'test redundancy switch' to robotic arm repair?"
+  },
+  {
+    "groupId": "551058",
+    "prompt": "Delete 'capture 360 imagery' from logging sample location, camera malfunctioned."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "Mark 'coordinate team positions' for navigation as completed."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "Could you add 'record fuel consumption' to the orbital insertion burn?"
+  },
+  {
+    "groupId": "593033",
+    "prompt": "Remove 'align precipitation sensors' from meteorology calibration, sensor is broken."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "Mark 'map subsurface lava tubes' as complete for geosampling."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "Can you add 'verify engine gimbal range' to orbital insertion burn?"
+  },
+  {
+    "groupId": "900484",
+    "prompt": "Delete 'service spacesuit cooling garment' repair task, suit is fine."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "Mark 'harvest vacuum-frozen ices' as complete, all samples are collected."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "Add 'record packaging time' to sample transport packaging."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "Delete 'trap micrometeorite impacts' from geosampling, aerogel array deployment failed."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "Mark 'dock with rotating space station' navigation task as completed."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "Can you add 'double check tank seals' to the oxygen level status check?"
+  },
+  {
+    "groupId": "310041",
+    "prompt": "Remove 'establish meteor scatter link' repair task, not feasible now."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "Mark 'confirm mission objectives' navigation task as completed."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "Could you add 'check suit power levels' to spacesuit cooling service?"
+  },
+  {
+    "groupId": "947469",
+    "prompt": "Delete 'request technical support' repair task, we figured it out ourselves."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "Mark 'verify communication systems' repair task as done."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "Can you add 'check for sample contamination' to the volcanic glass spherules collection?"
+  },
+  {
+    "groupId": "725809",
+    "prompt": "Remove 'service spacesuit cooling garment' repair task, suit is working fine."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "Mark 'establish moon-earth-mars network' navigation task as completed."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "Could you add 'note sample color' to the core samples extraction?"
+  },
+  {
+    "groupId": "445692",
+    "prompt": "Delete 'maintain blackout comms silence' emergency task, situation resolved."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "Mark 'service spacesuit cooling garment' repair task as complete, suit is good now."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "Add 'check shelter air supply' to locating the emergency shelter."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "Remove 'take sample site photos' geosampling task, camera is broken."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "Mark 'repair robotic arm joint' repair task as done."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "Could you add 'test shelter power' to emergency habitat inflation test?"
+  },
+  {
+    "groupId": "451380",
+    "prompt": "Delete 'maintain hydroponic oxygen farm' vitals task, system is offline."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "Mark 'plot course through asteroid field' navigation task as completed."
+  },
+  {
+    "groupId": "700029",
+    "prompt": "Can you add 'verify water tank levels' to overhaul electrolysis oxygen system?"
+  },
+  {
+    "groupId": "144372",
+    "prompt": "Remove 'sample polar shadow regions' geosampling task, time constraints."
+  },
+  {
+    "groupId": "856487",
+    "prompt": "Mark 'activate primary life support' vitals task as done."
+  },
+  {
+    "groupId": "760518",
+    "prompt": "Could you add 'note sample texture' to polar shadow regions collection?"
+  },
+  {
+    "groupId": "505391",
+    "prompt": "Delete 'package sample for transport' geosampling task, sample container damaged."
+  },
+  {
+    "groupId": "962541",
+    "prompt": "Mark 'follow exploration path beta' navigation task as completed."
+  },
+  {
+    "groupId": "697547",
+    "prompt": "Can you add 'check sensor grounding' to calibrate meteorology sensors repair task?"
+  },
+  {
+    "groupId": "305237",
+    "prompt": "Remove 'repair robotic arm joint' repair task, arm is irreparable."
+  },
+  {
+    "groupId": "535852",
+    "prompt": "Mark 'deploy seismic monitoring network' geosampling task as done."
+  },
+  {
+    "groupId": "374692",
+    "prompt": "Could you add 'check for route obstructions' to calculate optimal route to base?"
+  },
+  {
+    "groupId": "798437",
+    "prompt": "Delete 'perform orbital insertion burn' navigation task, mission aborted."
+  },
+  {
+    "groupId": "767647",
+    "prompt": "Mark 'capture transient lunar phenomena' geosampling task as completed."
+  },
+  {
+    "groupId": "551502",
+    "prompt": "Can you add 'record sample weight' to sample ancient lava flows collection?"
+  },
+  {
+    "groupId": "805549",
+    "prompt": "Remove 'reconfigure life support for EVA' vitals task, EVA cancelled."
+  },
+  {
+    "groupId": "722958",
+    "prompt": "Mark 'navigate using stellar reference' navigation task as done."
+  },
+  {
+    "groupId": "605662",
+    "prompt": "Could you add 'broadcast hazard location' to mark hazardous terrain?"
+  },
+  {
+    "groupId": "370616",
+    "prompt": "Delete 'coordinate lunar rover convoy' rover task, rover malfunctioned."
+  },
+  {
+    "groupId": "277043",
+    "prompt": "Mark 'follow exploration path beta' navigation task as completed."
+  },
+  {
+    "groupId": "679842",
+    "prompt": "Can you add 'test swarm communication' to program autonomous exploration loop?"
+  },
+  {
+    "groupId": "660461",
+    "prompt": "Remove 'establish moon-earth-mars network' navigation task, comms system issue."
+  },
+  {
+    "groupId": "979048",
+    "prompt": "Mark 'test emergency habitat anchoring' emergency task as done."
+  },
+  {
+    "groupId": "505102",
+    "prompt": "Could you add 'note sample color' to the collect regolith gas samples task?"
+  },
+  {
+    "groupId": "861815",
+    "prompt": "Delete 'dock with rotating space station' navigation task, station unavailable."
+  },
+  {
+    "groupId": "765552",
+    "prompt": "Mark 'optimize trajectory for fuel efficiency' navigation task as done."
+  },
+  {
+    "groupId": "472518",
+    "prompt": "Can you add 'check power levels' to request technical support repair task?"
+  },
+  {
+    "groupId": "407710",
+    "prompt": "Remove 'calibrate meteorology sensors' repair task, sensor irreparable."
+  },
+  {
+    "groupId": "800937",
+    "prompt": "In addition to aligning for flyby, we should also 'check fuel levels'."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "For the secure voice channels, can you add 'document setup process' as well?"
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Actually, let's remove 'document surface hardness' from sampling conditions documentation, we have that data elsewhere."
+  },
+  {
+    "groupId": "445676",
+    "prompt": "We just finished checking oxygen levels, so you can mark 'check oxygen level status' as completed."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "Could you mark 'test radio frequency ID' as done in the beacon deployment task?"
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Let's also add 'inspect panel for damage' to the solar panel array deployment."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "We've decided against it, so remove 'clean solar radiation detectors' from meteorology sensors calibration."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "The radiation shielding test is completed now, please mark 'test radiation shielding' as done."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "We've already retrieved the solar wind particles before degradation, mark 'retrieve before degradation' as completed."
+  },
+  {
+    "groupId": "990763",
+    "prompt": "For deploying the seismic monitoring network, maybe we also need to 'calibrate sensor sensitivity'."
+  },
+  {
+    "groupId": "327379",
+    "prompt": "Actually, scratch 'apply quantum encryption' from encoding sensitive mission data, we'll use a different method."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "We've now secured the sample in the rack for transport, mark 'secure in sample rack' as completed."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "Can you add a subtask to spacesuit cooling garment service: 'check coolant fluid levels'?"
+  },
+  {
+    "groupId": "249826",
+    "prompt": "We won't be doing that part, so remove 'confirm hard dock seal' from the space station docking."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "We finished including a scale reference in the sample site photos, mark 'include scale reference' as done."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "When locating the emergency shelter, let's also add 'check oxygen supply' to the task."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "Let's just forget about the 'test analog backup comms' task for now, remove it."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "No need for that anymore, remove 'apply hazard warnings' from specimen container labeling."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "The 'charge battery arrays' task is now complete, mark it as done."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "We've just monitored core body temperature for spacesuit vitals, mark 'monitor core body temperature' as completed."
+  },
+  {
+    "groupId": "417277",
+    "prompt": "For monitoring elevation changes, could you also add 'record start elevation'?"
+  },
+  {
+    "groupId": "929513",
+    "prompt": "We're skipping that step, delete 'simulate re-entry stresses' from the heat shield integrity check."
+  },
+  {
+    "groupId": "605845",
+    "prompt": "We finished monitoring beam dispersion for the laser comms link, mark 'monitor beam dispersion' as done."
+  },
+  {
+    "groupId": "862848",
+    "prompt": "When collecting from polar shadow regions, can you also add 'note ice crystal size' to the task?"
+  },
+  {
+    "groupId": "474813",
+    "prompt": "That sensor is broken, so remove 'align precipitation sensors' from meteorology sensors calibration."
+  },
+  {
+    "groupId": "719106",
+    "prompt": "The 'deploy solar panel array' repair task is now completed, mark it done."
+  },
+  {
+    "groupId": "314259",
+    "prompt": "To the EVA life support reconfiguration, let's also add 'confirm suit pressure'."
+  },
+  {
+    "groupId": "923364",
+    "prompt": "Actually, the power grid issue resolved itself, so delete the 'diagnose power grid fluctuations' task."
+  },
+  {
+    "groupId": "645001",
+    "prompt": "We've obtained formal confirmation, so mark 'obtain formal confirmation' for mission objectives as completed."
+  },
+  {
+    "groupId": "788660",
+    "prompt": "When programming the autonomous exploration loop, maybe we should also 'set maximum rover speed'."
+  },
+  {
+    "groupId": "210397",
+    "prompt": "We have enough backups, so remove 'backup to local storage' from the relaying environmental readings task."
+  },
+  {
+    "groupId": "804996",
+    "prompt": "We finished classifying the impactor type for impact ejecta documentation, mark 'classify impactor type' as completed."
+  },
+  {
+    "groupId": "730244",
+    "prompt": "For emergency habitat anchoring, let's also add 'check tether material'."
+  },
+  {
+    "groupId": "934859",
+    "prompt": "It's not relevant here, delete 'simulate re-entry stresses' from the heat shield integrity task."
+  },
+  {
+    "groupId": "907028",
+    "prompt": "The 'relay through orbital data relay' navigation task is now done, mark it as complete."
+  },
+  {
+    "groupId": "740492",
+    "prompt": "When testing habitat separation, can you also add 'verify external camera feed'?"
+  },
+  {
+    "groupId": "720480",
+    "prompt": "We don't have time for it, remove the 'test emergency flashlight comms' task."
+  },
+  {
+    "groupId": "417702",
+    "prompt": "We're done with marking hazardous terrain, mark 'update mission control' as completed."
+  },
+  {
+    "groupId": "384418",
+    "prompt": "For secure voice channels implementation, let's also add 'train crew on code phrases'."
+  },
+  {
+    "groupId": "960827",
+    "prompt": "The science team is busy, so delete 'capture science data during pass' from planetary flyby alignment."
+  },
+  {
+    "groupId": "950003",
+    "prompt": "Thankfully we didn't need it, mark 'perform emergency course reversal' as completed."
+  },
+  {
+    "groupId": "358817",
+    "prompt": "Could you also add 'lubricate joints' to the robotic arm repair task?"
+  },
+  {
+    "groupId": "376010",
+    "prompt": "It's not a priority, remove 'test emergency whistle protocol' task."
+  },
+  {
+    "groupId": "719355",
+    "prompt": "We're done measuring sample dimensions for volcanic glass spherules, mark 'measure sample dimensions' as done."
+  },
+  {
+    "groupId": "466461",
+    "prompt": "When repairing the robotic arm, can you also add 'inspect cable connections'?"
+  },
+  {
+    "groupId": "551058",
+    "prompt": "The camera malfunctioned, so delete 'capture 360 imagery' from logging sample location."
+  },
+  {
+    "groupId": "841007",
+    "prompt": "The 'coordinate team positions' navigation task is now completed, mark it as done."
+  },
+  {
+    "groupId": "595088",
+    "prompt": "For the orbital insertion burn, could you also add 'monitor engine temperature'?"
+  },
+  {
+    "groupId": "593033",
+    "prompt": "The sensor is broken, so remove 'align precipitation sensors' from meteorology sensors calibration."
+  },
+  {
+    "groupId": "917773",
+    "prompt": "The 'map subsurface lava tubes' geosampling task is now complete, mark it as done."
+  },
+  {
+    "groupId": "228984",
+    "prompt": "When doing orbital insertion burn, can you also add 'verify engine gimbal range'?"
+  },
+  {
+    "groupId": "900484",
+    "prompt": "The suit is fine, so delete the 'service spacesuit cooling garment' repair task."
+  },
+  {
+    "groupId": "995446",
+    "prompt": "All samples are collected, mark 'harvest vacuum-frozen ices' as complete."
+  },
+  {
+    "groupId": "291633",
+    "prompt": "For sample transport packaging, let's also add 'record packaging location'."
+  },
+  {
+    "groupId": "946598",
+    "prompt": "The aerogel array deployment failed, delete 'trap micrometeorite impacts' from geosampling."
+  },
+  {
+    "groupId": "827940",
+    "prompt": "The 'dock with rotating space station' navigation task is now completed, mark it as done."
+  },
+  {
+    "groupId": "297075",
+    "prompt": "When checking oxygen level status, can you also add 'double check tank seals'?"
+  },
+  {
+    "groupId": "310041",
+    "prompt": "It's not feasible now, remove 'establish meteor scatter link' repair task."
+  },
+  {
+    "groupId": "371152",
+    "prompt": "The 'confirm mission objectives' navigation task is now completed, mark it as done."
+  },
+  {
+    "groupId": "502912",
+    "prompt": "For spacesuit cooling garment service, could you also add 'check coolant fluid levels'?"
+  },
+  {
+    "groupId": "947469",
+    "prompt": "We figured it out ourselves, so delete 'request technical support' repair task."
+  },
+  {
+    "groupId": "694844",
+    "prompt": "The 'verify communication systems' repair task is now done, mark it as completed."
+  },
+  {
+    "groupId": "874820",
+    "prompt": "When collecting volcanic glass spherules, can you also add 'check for sample contamination'?"
+  },
+  {
+    "groupId": "725809",
+    "prompt": "The suit is working fine, so remove 'service spacesuit cooling garment' repair task."
+  },
+  {
+    "groupId": "450603",
+    "prompt": "The 'establish moon-earth-mars network' navigation task is now completed, mark it as done."
+  },
+  {
+    "groupId": "242633",
+    "prompt": "For the core samples extraction, could you also add 'note sample color'?"
+  },
+  {
+    "groupId": "445692",
+    "prompt": "The situation is resolved, so delete 'maintain blackout comms silence' emergency task."
+  },
+  {
+    "groupId": "283984",
+    "prompt": "The suit is good now, mark 'service spacesuit cooling garment' repair task as complete."
+  },
+  {
+    "groupId": "806667",
+    "prompt": "When locating the emergency shelter, let's also add 'check shelter air supply' to the task."
+  },
+  {
+    "groupId": "831635",
+    "prompt": "The camera is broken, remove 'take sample site photos' geosampling task."
+  },
+  {
+    "groupId": "972048",
+    "prompt": "The 'repair robotic arm joint' repair task is now done, mark it as completed."
+  },
+  {
+    "groupId": "984635",
+    "prompt": "When doing the emergency habitat inflation test, could you also 'test shelter power'?"
+  },
+  {
+    "groupId": "451380",
+    "prompt": "The system is offline, delete 'maintain hydroponic oxygen farm' vitals task."
+  },
+  {
+    "groupId": "607088",
+    "prompt": "The 'plot course through asteroid field' navigation task is now completed, mark it as done."
+  },
+  {
+    "groupId": "700029",
+    "prompt": "For overhauling the electrolysis oxygen system, can you also add 'verify water tank levels'?"
+  },
+  {
+    "groupId": "144372",
+    "prompt": "Due to time constraints, remove 'sample polar shadow regions' geosampling task."
+  },
+  {
+    "groupId": "856487",
+    "prompt": "The 'activate primary life support' vitals task is now done, mark it as completed."
+  },
+  {
+    "groupId": "760518",
+    "prompt": "When collecting from polar shadow regions, could you also add 'note sample texture'?"
+  },
+  {
+    "groupId": "505391",
+    "prompt": "The sample container damaged, so delete 'package sample for transport' geosampling task."
+  },
+  {
+    "groupId": "962541",
+    "prompt": "The 'follow exploration path beta' navigation task is now completed, mark it as done."
+  },
+  {
+    "groupId": "697547",
+    "prompt": "For calibrating meteorology sensors repair task, can you also add 'check sensor grounding'?"
+  },
+  {
+    "groupId": "305237",
+    "prompt": "The arm is irreparable, remove 'repair robotic arm joint' repair task."
+  },
+  {
+    "groupId": "535852",
+    "prompt": "The 'deploy seismic monitoring network' geosampling task is now done, mark it as completed."
+  },
+  {
+    "groupId": "374692",
+    "prompt": "When calculating optimal route to base, could you also 'check for route obstructions'?"
+  },
+  {
+    "groupId": "798437",
+    "prompt": "The mission aborted, delete 'perform orbital insertion burn' navigation task."
+  },
+  {
+    "groupId": "767647",
+    "prompt": "The 'capture transient lunar phenomena' geosampling task is now completed, mark it done."
+  },
+  {
+    "groupId": "551502",
+    "prompt": "When collecting sample ancient lava flows, can you also add 'record sample weight'?"
+  },
+  {
+    "groupId": "805549",
+    "prompt": "The EVA is cancelled, so remove 'reconfigure life support for EVA' vitals task."
+  },
+  {
+    "groupId": "722958",
+    "prompt": "The 'navigate using stellar reference' navigation task is now done, mark it as completed."
+  },
+  {
+    "groupId": "605662",
+    "prompt": "When marking hazardous terrain, could you also add 'broadcast hazard location'?"
+  },
+  {
+    "groupId": "370616",
+    "prompt": "The rover malfunctioned, delete 'coordinate lunar rover convoy' rover task."
+  },
+  {
+    "groupId": "277043",
+    "prompt": "The 'follow exploration path beta' navigation task is now completed, mark it done."
+  },
+  {
+    "groupId": "679842",
+    "prompt": "For programming the autonomous exploration loop, maybe we also need to 'test swarm communication'?"
+  },
+  {
+    "groupId": "660461",
+    "prompt": "Due to comms system issue, remove 'establish moon-earth-mars network' navigation task."
+  },
+  {
+    "groupId": "979048",
+    "prompt": "The 'test emergency habitat anchoring' emergency task is now done, mark it as completed."
+  },
+  {
+    "groupId": "505102",
+    "prompt": "When doing the collect regolith gas samples task, can you also add 'note sample color'?"
+  },
+  {
+    "groupId": "861815",
+    "prompt": "The station unavailable, delete 'dock with rotating space station' navigation task."
+  },
+  {
+    "groupId": "765552",
+    "prompt": "The 'optimize trajectory for fuel efficiency' navigation task is now done, mark it as completed."
+  },
+  {
+    "groupId": "472518",
+    "prompt": "When requesting technical support repair task, can you also add 'check power levels'?"
+  },
+  {
+    "groupId": "407710",
+    "prompt": "The sensor irreparable, remove 'calibrate meteorology sensors' repair task."
+  },
+  {
+    "groupId": "800937",
+    "prompt": "Besides aligning for the flyby, we also need to 'check fuel levels'."
+  },
+  {
+    "groupId": "936618",
+    "prompt": "For the secure voice channels, can you also add 'document setup process' to it?"
+  },
+  {
+    "groupId": "424947",
+    "prompt": "Let's just remove 'document surface hardness' from documenting sampling conditions, we already have that data."
+  },
+  {
+    "groupId": "445676",
+    "prompt": "Since we just checked oxygen levels, you can mark 'check oxygen level status' as completed now."
+  },
+  {
+    "groupId": "733208",
+    "prompt": "Can you mark 'test radio frequency ID' for the beacon deployment as done?"
+  },
+  {
+    "groupId": "140624",
+    "prompt": "Let's also include 'inspect panel for damage' in the solar panel array deployment."
+  },
+  {
+    "groupId": "122615",
+    "prompt": "We decided against it, so please remove 'clean solar radiation detectors' from meteorology sensors calibration."
+  },
+  {
+    "groupId": "359041",
+    "prompt": "Since the radiation shielding test is complete, please mark 'test radiation shielding' as done."
+  },
+  {
+    "groupId": "892498",
+    "prompt": "As we've already retrieved the solar wind particles before degradation, mark 'retrieve before degradation' as completed."
+  },
+  {
+    "groupId": "990763",
+    "prompt": "For deploying the seismic monitoring network, we should also 'calibrate sensor sensitivity', shouldn't we?"
+  },
+  {
+    "groupId": "327379",
+    "prompt": "Actually, let's not use that method, so scratch 'apply quantum encryption' from encoding sensitive mission data."
+  },
+  {
+    "groupId": "936600",
+    "prompt": "Having secured the sample in the rack for transport, mark 'secure in sample rack' as completed now."
+  },
+  {
+    "groupId": "430568",
+    "prompt": "Could you add a subtask to spacesuit cooling garment service: maybe 'check coolant fluid levels'?"
+  },
+  {
+    "groupId": "249826",
+    "prompt": "We won't be doing that part of the docking, so remove 'confirm hard dock seal' from the space station docking."
+  },
+  {
+    "groupId": "386499",
+    "prompt": "Because we finished including a scale reference in the sample site photos, mark 'include scale reference' as done."
+  },
+  {
+    "groupId": "820440",
+    "prompt": "When we are locating the emergency shelter, let's also remember to 'check oxygen supply' for that task."
+  },
+  {
+    "groupId": "820485",
+    "prompt": "Let's just forget about the 'test analog backup comms' task for the time being, please remove it."
+  },
+  {
+    "groupId": "529190",
+    "prompt": "It's not necessary anymore, remove 'apply hazard warnings' from specimen container labeling now."
+  },
+  {
+    "groupId": "866983",
+    "prompt": "The 'charge battery arrays' task is now fully complete, please mark it as done."
+  },
+  {
+    "groupId": "367213",
+    "prompt": "As we've just monitored core body temperature for spacesuit vitals, mark 'monitor core body temperature"
+  }
+]
